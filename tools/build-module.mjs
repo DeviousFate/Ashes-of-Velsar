@@ -45,13 +45,15 @@ const dashboardId = "AoVDashboard0001";
 const dashboardPages = {
   start: "AoVStartHere0001",
   scenes: "AoVSceneIndex001",
-  npcs: "AoVNpcDirectory1"
+  npcs: "AoVNpcDirectory1",
+  landing: "AoVLandingPage01"
 };
 const adventureId = "AoVAdventure0001";
 const adventureJournalId = "RQiN0Cs1B9S1UZZE";
 const quickReferenceId = "0031X75piojXUkIM";
 const handoutsId = "5PyjVzBeImPu8J7N";
 const gmMapPageId = "AoVGmMapPage0001";
+const blueprintJournalId = "AoVBlueprints001";
 
 const chapterPages = {
   chapter1: "vD2jM2BNpIIqr8Wg",
@@ -62,20 +64,39 @@ const chapterPages = {
 };
 
 const mapDefinitions = [
-  { id: "xk0d9gBiaJHvZewJ", name: "01 — Abandoned Compressor Station and Eastern Scrapyard", file: "1 Abandoned Compressor Station and Eastern Scrapyard.png", slug: "01-abandoned-compressor-station.png", folder: "side", page: "chapter1" },
-  { id: "MkBY37RL9t0H1cqF", name: "02 — The Bent Spanner Cantina", file: "2 The Bent Spanner Cantina.png", slug: "02-the-bent-spanner-cantina.png", folder: "chapter1", page: "chapter1" },
-  { id: "6vbTdZx3xrxOVgP6", name: "03 — Ressik’s Rustclaw Hideout", file: "3 Ressik’s Rustclaw Hideout.png", slug: "03-ressiks-rustclaw-hideout.png", folder: "chapter2", page: "chapter2" },
-  { id: "Cdc4vsuci2jeqQJN", name: "04 — Doctor Vey’s Clinic", file: "4 Doctor Vey’s Clinic.png", slug: "04-doctor-veys-clinic.png", folder: "side", page: "chapter2" },
-  { id: "EL02sxuRACXvwSXT", name: "05 — Southern Cut Imperial Checkpoint", file: "5 Southern Cut Imperial Checkpoint.png", slug: "05-southern-cut-checkpoint.png", folder: "chapter4", page: "chapter4" },
-  { id: "MrN6tvX9p3j4aXs4", name: "06 — Crashed Transport Site", file: "6 Crashed Transport Site.png", slug: "06-crashed-transport-site.png", folder: "chapter3", page: "chapter3" },
-  { id: "Qen9gVMLOpISn9Pk", name: "07 — Tovan Rell’s Hidden Refuge", file: "7 Tovan Rell’s Hidden Refuge.png", slug: "07-tovan-rells-hidden-refuge.png", folder: "chapter3", page: "chapter3" },
-  { id: "jLuD2jD9RKIcsMaJ", name: "08 — Prisoner Transfer Ambush Site", file: "8 Prisoner Transfer Ambush Site.png", slug: "08-prisoner-transfer-ambush.png", folder: "chapter4", page: "chapter4" },
-  { id: "nZOXeCzRCNObMGNa", name: "09 — Davik Renn’s Hidden Stargazer Hangar", file: "9 Davik Renn’s Hidden Stargazer Hangar.png", slug: "09-stargazer-hangar.png", folder: "chapter4", page: "chapter4" },
-  { id: "AoVSceneMap00010", name: "10 — Administration Square and Imperial Detention Center", file: "10 Administration Square and Imperial Detention Center.png", slug: "10-administration-square.png", folder: "chapter4", page: "chapter4" },
-  { id: "AoVSceneMap00011", name: "11 — Workers’ Blocks Evacuation", file: "11 Workers’ Blocks Evacuation.png", slug: "11-workers-blocks-evacuation.png", folder: "chapter4", page: "chapter4" },
-  { id: "AoVSceneMap00012", name: "12 — Market Row During the Purge", file: "12 Market Row During the Purge.png", slug: "12-market-row-purge.png", folder: "chapter4", page: "chapter4" },
-  { id: "AoVSceneMap00013", name: "13 — Desert Shrine", file: "13 Desert Shrine.png", slug: "13-desert-shrine.png", folder: "side", page: "chapter3" },
-  { id: "AoVSceneMap00014", name: "14 — Broken Beacon Escape Pod Site", file: "14 Broken Beacon Escape Pod Site.png", slug: "14-broken-beacon.png", folder: "side", page: "chapter3" }
+  { id: "AoVLandingMap001", name: "01 — Bracken’s Point Landing Yard", slug: "01-brackens-point-landing-yard.png", width: 1448, height: 1086, folder: "chapter1", page: "chapter1" },
+  { id: "MkBY37RL9t0H1cqF", name: "02 — The Bent Spanner Cantina", slug: "02-bent-spanner-cantina.png", width: 1411, height: 1114, folder: "chapter1", page: "chapter1" },
+  { id: "xk0d9gBiaJHvZewJ", name: "03 — Compressor Station and Scrapyard", slug: "03-compressor-station-scrapyard.png", width: 1409, height: 1116, folder: "chapter1", page: "chapter1" },
+  { id: "6vbTdZx3xrxOVgP6", name: "04 — Ressik’s Rustclaw Hideout", slug: "04-ressiks-rustclaw-hideout.png", width: 1448, height: 1086, folder: "chapter2", page: "chapter2" },
+  { id: "EL02sxuRACXvwSXT", name: "05 — Southern Cut Imperial Checkpoint", slug: "05-southern-cut-checkpoint.png", width: 1619, height: 971, folder: "chapter4", page: "chapter4" },
+  { id: "AoVReclaimMap001", name: "06 — Davik’s Reclamation Yard", slug: "06-daviks-reclamation-yard.png", width: 1448, height: 1086, folder: "chapter2", page: "chapter2" },
+  { id: "nZOXeCzRCNObMGNa", name: "07 — Hidden Stargazer Hangar", slug: "07-hidden-stargazer-hangar.png", width: 1448, height: 1086, folder: "chapter4", page: "chapter4" },
+  { id: "MrN6tvX9p3j4aXs4", name: "08 — Crashed Transport Site (The Wayfarer)", slug: "08-crashed-transport-site.png", width: 1396, height: 1127, folder: "chapter3", page: "chapter3" },
+  { id: "AoVSceneMap00014", name: "09 — Broken Beacon Site", slug: "09-broken-beacon-site.png", width: 1322, height: 1190, folder: "chapter3", page: "chapter3" },
+  { id: "Qen9gVMLOpISn9Pk", name: "10 — Tovan Rell’s Hidden Refuge", slug: "10-tovan-rells-hidden-refuge.png", width: 1409, height: 1116, folder: "chapter3", page: "chapter3" },
+  { id: "jLuD2jD9RKIcsMaJ", name: "11 — Prisoner Transfer Ambush", slug: "11-prisoner-transfer-ambush.png", width: 1580, height: 995, folder: "chapter4", page: "chapter4" },
+  { id: "AoVSceneMap00010", name: "12 — Administration Square", slug: "12-administration-square.png", width: 1433, height: 1098, folder: "chapter4", page: "chapter4" },
+  { id: "AoVSceneMap00011", name: "13 — Workers’ Blocks", slug: "13-workers-blocks.png", width: 1448, height: 1086, folder: "chapter4", page: "chapter4" },
+  { id: "AoVSceneMap00012", name: "14 — Market Row During the Purge", slug: "14-market-row-during-purge.png", width: 1448, height: 1086, folder: "chapter4", page: "chapter4" },
+  { id: "AoVFinaleMap0001", name: "15 — Stargazer Hangar Finale (Damaged)", slug: "15-stargazer-hangar-finale-damaged.png", width: 1448, height: 1086, folder: "chapter4", page: "chapter4" }
+];
+
+const blueprintDefinitions = [
+  ["Bracken’s Point Landing Yard", "01_brackens_point_landing_yard_blueprint.png"],
+  ["Bent Spanner Cantina", "02_bent_spanner_cantina_blueprint.png"],
+  ["Compressor Station and Scrapyard", "03_compressor_station_and_scrapyard_blueprint.png"],
+  ["Ressik’s Rustclaw Hideout", "04_ressiks_rustclaw_hideout_blueprint.png"],
+  ["Southern Cut Imperial Checkpoint", "05_southern_cut_imperial_checkpoint_blueprint.png"],
+  ["Davik’s Reclamation Yard", "06_daviks_reclamation_yard_blueprint.png"],
+  ["Hidden Stargazer Hangar", "07_hidden_stargazer_hangar_blueprint.png"],
+  ["Crashed Transport Site", "08_crashed_transport_site_blueprint.png"],
+  ["Broken Beacon Site", "09_broken_beacon_site_blueprint.png"],
+  ["Tovan Rell’s Hidden Refuge", "10_tovan_rells_hidden_refuge_blueprint.png"],
+  ["Prisoner Transfer Ambush", "11_prisoner_transfer_ambush_blueprint.png"],
+  ["Administration Square", "12_administration_square_blueprint.png"],
+  ["Workers’ Blocks", "13_workers_blocks_blueprint.png"],
+  ["Market Row During the Purge", "14_market_row_during_the_purge_blueprint.png"],
+  ["Stargazer Hangar Finale (Damaged)", "15_stargazer_hangar_finale_damaged_blueprint.png"]
 ];
 
 const handoutFiles = [
@@ -219,7 +240,25 @@ function makeJournalPage(id, name, content, sort) {
   };
 }
 
-function makeJournalRoot(id, name, pages, sort) {
+function makeImagePage(id, name, src, sort, flags = {}) {
+  return {
+    _id: id,
+    name,
+    type: "image",
+    sort,
+    title: { show: true, level: 1 },
+    image: { alignment: "center", caption: "" },
+    text: { format: 1, content: "", markdown: "" },
+    video: { controls: true, volume: 0.5 },
+    src,
+    system: {},
+    ownership: { default: -1 },
+    flags: { [MODULE_ID]: { generated: true, ...flags } },
+    _stats: stats()
+  };
+}
+
+function makeJournalRoot(id, name, pages, sort, ownership = { default: 0 }) {
   return {
     _id: id,
     name,
@@ -227,7 +266,7 @@ function makeJournalRoot(id, name, pages, sort) {
     folder: journalFolderId,
     categories: [],
     sort,
-    ownership: { default: 0 },
+    ownership,
     flags: { [MODULE_ID]: { campaignJournal: true } },
     _stats: stats()
   };
@@ -407,6 +446,7 @@ function dashboardHtml() {
 <li>@UUID[${compendiumUuid("journals", "JournalEntry", adventureJournalId)}]{Full Adventure Journal}</li>
 <li>@UUID[${compendiumUuid("journals", "JournalEntry", quickReferenceId)}]{Quick Reference}</li>
 <li>@UUID[${compendiumUuid("journals", "JournalEntry", handoutsId)}]{Player Handouts}</li>
+<li>@UUID[${compendiumUuid("journals", "JournalEntry", blueprintJournalId)}]{GM Map Blueprints}</li>
 </ul>
 <h2>Rules Sources</h2>
 <p>Use the installed SW5E compendiums for rules, equipment, powers, and conditions. The campaign pack contains the Velsar-specific cast plus the three standard SW5E adversaries required by the staged encounters.</p>
@@ -417,10 +457,11 @@ function dashboardHtml() {
 }
 
 function sceneIndexHtml() {
-  const items = mapDefinitions.map((scene) =>
-    `<li>@UUID[${compendiumUuid("scenes", "Scene", scene.id)}]{${scene.name}}</li>`
-  ).join("\n");
-  return `<h1>Scene Index</h1><p>The numbered scenes follow their recommended campaign order. Every imported scene includes a journal pin in its upper-left corner.</p><ol>${items}</ol>`;
+  const items = mapDefinitions.map((scene, index) => {
+    const blueprintPageId = `AoVBlueprint${String(index + 1).padStart(4, "0")}`;
+    return `<li>@UUID[${compendiumUuid("scenes", "Scene", scene.id)}]{${scene.name}} — @UUID[${compendiumUuid("journals", "JournalEntry", blueprintJournalId)}.JournalEntryPage.${blueprintPageId}]{GM Blueprint}</li>`;
+  }).join("\n");
+  return `<h1>Scene Index</h1><p>The numbered scenes follow their recommended campaign order. Every imported scene includes a campaign journal pin; the linked blueprint pages are GM-only.</p><ol>${items}</ol>`;
 }
 
 function npcDirectoryHtml(actorRoots) {
@@ -482,9 +523,6 @@ const tokenActorRoots = new Map([...sourceActors, ...officialEncounterRecords]
   .filter(({ key }) => /^!actors![^!]+$/.test(key))
   .map(({ value }) => [value._id, value]));
 
-for (const scene of mapDefinitions) {
-  await copyAsset(path.join(worldImagePath, "Maps", scene.file), path.join("assets", "maps", scene.slug));
-}
 await copyAsset(path.join(worldImagePath, "Maps", "Diagram.png"), path.join("assets", "maps", "bt-9-stargazer-diagram.png"));
 for (const [sourceName, targetName] of handoutFiles) {
   await copyAsset(path.join(worldImagePath, "Handouts", "Ashes of Velsar", sourceName), path.join("assets", "handouts", targetName));
@@ -537,22 +575,36 @@ const actorRootPreview = sourceActors
 const dashboardPageRecords = [
   { id: dashboardPages.start, value: makeJournalPage(dashboardPages.start, "Start Here", dashboardHtml(), 0) },
   { id: dashboardPages.scenes, value: makeJournalPage(dashboardPages.scenes, "Scene Index", sceneIndexHtml(), 100000) },
-  { id: dashboardPages.npcs, value: makeJournalPage(dashboardPages.npcs, "Campaign Actors", npcDirectoryHtml(actorRootPreview), 200000) }
+  { id: dashboardPages.npcs, value: makeJournalPage(dashboardPages.npcs, "Campaign Actors", npcDirectoryHtml(actorRootPreview), 200000) },
+  { id: dashboardPages.landing, value: makeImagePage(dashboardPages.landing, "Campaign Landing Page", `${MODULE_PATH}/assets/landing-page.png`, 300000) }
 ];
 journalRecords.push({ key: `!journal!${dashboardId}`, value: makeJournalRoot(dashboardId, "00 — Ashes of Velsar GM Dashboard", dashboardPageRecords.map(({ id }) => id), -100000) });
 for (const page of dashboardPageRecords) journalRecords.push({ key: `!journal.pages!${dashboardId}.${page.id}`, value: page.value });
+
+const blueprintPageRecords = blueprintDefinitions.map(([name, file], index) => {
+  const id = `AoVBlueprint${String(index + 1).padStart(4, "0")}`;
+  return {
+    id,
+    value: makeImagePage(id, `${String(index + 1).padStart(2, "0")} — ${name}`, `${MODULE_PATH}/assets/blueprints/${file}`, index * 100000, { gmOnly: true, blueprint: true })
+  };
+});
+journalRecords.push({
+  key: `!journal!${blueprintJournalId}`,
+  value: makeJournalRoot(blueprintJournalId, "Ashes of Velsar — GM Map Blueprints", blueprintPageRecords.map(({ id }) => id), 300000, { default: -1 })
+});
+for (const page of blueprintPageRecords) journalRecords.push({ key: `!journal.pages!${blueprintJournalId}.${page.id}`, value: page.value });
 journalRecords.push({ key: `!folders!${journalFolderId}`, value: folderDocument(journalFolderId, "Ashes of Velsar", "JournalEntry", 0, "#9e2b25") });
 
 const sceneSourceRoots = new Map(sourceScenes
   .filter(({ key }) => /^!scenes![^!]+$/.test(key))
   .map(({ value }) => [value._id, value]));
-const sceneTemplate = sceneSourceRoots.get(mapDefinitions[0].id);
+const sceneTemplate = sceneSourceRoots.get("xk0d9gBiaJHvZewJ") ?? sceneSourceRoots.values().next().value;
 if (!sceneTemplate) throw new Error("The source snapshot does not contain a Scene template.");
 
 const sceneRecords = [];
 for (const [index, definition] of mapDefinitions.entries()) {
   const scene = deepClone(sceneSourceRoots.get(definition.id) ?? sceneTemplate);
-  const backgroundPath = `${MODULE_PATH}/assets/maps/${definition.slug}`;
+  const backgroundPath = `${MODULE_PATH}/assets/maps/official/${definition.slug}`;
   const note = makeSceneNote(definition, index);
   const layout = sceneLayouts[definition.slug];
   if (!layout) throw new Error(`Missing traced scene layout for ${definition.slug}`);
@@ -606,8 +658,8 @@ for (const [index, definition] of mapDefinitions.entries()) {
   scene.navigation = false;
   scene.navName = "";
   scene.navOrder = index * 10;
-  scene.width = 1448;
-  scene.height = 1086;
+  scene.width = definition.width;
+  scene.height = definition.height;
   scene.padding = 0;
   scene.background = {
     ...(scene.background ?? {}),
@@ -638,7 +690,7 @@ for (const [index, definition] of mapDefinitions.entries()) {
     ...scene.flags,
     [MODULE_ID]: {
       chapter: definition.page,
-      sourceMap: definition.file,
+      sourceMap: `GM and Player Maps.zip/Player Maps/${index + 1}.png`,
       tracedWalls: wallIds.length,
       stagedTokens: tokenIds.length
     }
@@ -726,10 +778,10 @@ const allFolders = [...journalRecords, ...sceneRecords, ...actorRecords]
 const adventure = {
   _id: adventureId,
   name: "Ashes of Velsar",
-  img: `${MODULE_PATH}/assets/handouts/arrival-at-brackens-point.png`,
-  caption: "Arrival at Bracken’s Point",
+  img: `${MODULE_PATH}/assets/landing-page.png`,
+  caption: "Ashes of Velsar",
   sort: 0,
-  description: "<p><strong>A complete SW5E adventure for four to six characters of 1st–4th level.</strong></p><p>Import this Adventure to create the campaign journals, player handouts, fourteen scenes, sixteen NPCs, the BT-9 Stargazer, folders, and linked scene journal pins.</p>",
+  description: "<p><strong>A complete SW5E adventure for four to six characters of 1st–4th level.</strong></p><p>Import this Adventure to create the campaign journals, player handouts, fifteen official scenes, GM-only map blueprints, campaign actors, folders, and linked scene journal pins.</p>",
   actors: actorRoots,
   combats: [],
   items: [],
@@ -747,5 +799,5 @@ const adventure = {
 };
 await writePack("adventure", [{ key: `!adventures!${adventureId}`, value: adventure }]);
 
-console.log(`Copied ${mapDefinitions.length} maps and ${handoutFiles.length} handouts`);
+console.log(`Packaged ${mapDefinitions.length} official player maps, ${blueprintDefinitions.length} GM blueprints, and ${handoutFiles.length} handouts`);
 console.log(`Packaged ${actorRoots.length} actors, ${journalRoots.length} journals, and ${sceneRoots.length} scenes`);

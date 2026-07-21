@@ -15,8 +15,8 @@ const require = createRequire(path.join(foundryAppPath, "package.json"));
 const { ClassicLevel } = require("classic-level");
 
 const expectedRoots = {
-  journals: { expression: /^!journal![^!]+$/, count: 4 },
-  scenes: { expression: /^!scenes![^!]+$/, count: 14 },
+  journals: { expression: /^!journal![^!]+$/, count: 5 },
+  scenes: { expression: /^!scenes![^!]+$/, count: 15 },
   campaign: { expression: /^!actors![^!]+$/, count: 20 },
   adventure: { expression: /^!adventures![^!]+$/, count: 1 }
 };
@@ -182,8 +182,8 @@ for (const { key, value } of packData.scenes.filter(({ key }) => /^!scenes.token
 const adventure = packData.adventure.find(({ key }) => /^!adventures![^!]+$/.test(key))?.value;
 if (adventure) {
   if (adventure.actors?.length !== 20) failures.push("Adventure does not embed all 20 campaign actors");
-  if (adventure.journal?.length !== 4) failures.push("Adventure does not embed all 4 journals");
-  if (adventure.scenes?.length !== 14) failures.push("Adventure does not embed all 14 scenes");
+  if (adventure.journal?.length !== 5) failures.push("Adventure does not embed all 5 journals");
+  if (adventure.scenes?.length !== 15) failures.push("Adventure does not embed all 15 scenes");
   if (!adventure.scenes?.every((scene) => scene.notes?.length === 1)) failures.push("Adventure scenes did not embed their journal pins");
   if (!adventure.scenes?.every((scene) => scene.walls?.length > 0)) failures.push("Adventure scenes did not embed traced walls");
   if (!adventure.scenes?.every((scene) => scene.tokens?.every((token) => token.delta && typeof token.delta === "object"))) {
@@ -192,8 +192,27 @@ if (adventure) {
 }
 
 const requiredAssets = [
-  "assets/maps/01-abandoned-compressor-station.png",
-  "assets/maps/14-broken-beacon.png",
+  ...Array.from({ length: 15 }, (_, index) => {
+    const slugs = [
+      "01-brackens-point-landing-yard.png", "02-bent-spanner-cantina.png", "03-compressor-station-scrapyard.png",
+      "04-ressiks-rustclaw-hideout.png", "05-southern-cut-checkpoint.png", "06-daviks-reclamation-yard.png",
+      "07-hidden-stargazer-hangar.png", "08-crashed-transport-site.png", "09-broken-beacon-site.png",
+      "10-tovan-rells-hidden-refuge.png", "11-prisoner-transfer-ambush.png", "12-administration-square.png",
+      "13-workers-blocks.png", "14-market-row-during-purge.png", "15-stargazer-hangar-finale-damaged.png"
+    ];
+    return `assets/maps/official/${slugs[index]}`;
+  }),
+  ...[
+    "01_brackens_point_landing_yard_blueprint.png", "02_bent_spanner_cantina_blueprint.png",
+    "03_compressor_station_and_scrapyard_blueprint.png", "04_ressiks_rustclaw_hideout_blueprint.png",
+    "05_southern_cut_imperial_checkpoint_blueprint.png", "06_daviks_reclamation_yard_blueprint.png",
+    "07_hidden_stargazer_hangar_blueprint.png", "08_crashed_transport_site_blueprint.png",
+    "09_broken_beacon_site_blueprint.png", "10_tovan_rells_hidden_refuge_blueprint.png",
+    "11_prisoner_transfer_ambush_blueprint.png", "12_administration_square_blueprint.png",
+    "13_workers_blocks_blueprint.png", "14_market_row_during_the_purge_blueprint.png",
+    "15_stargazer_hangar_finale_damaged_blueprint.png"
+  ].map((file) => `assets/blueprints/${file}`),
+  "assets/landing-page.png",
   "assets/maps/bt-9-stargazer-diagram.png",
   "assets/handouts/arrival-at-brackens-point.png",
   "assets/handouts/brackens-point-gm-map.png",

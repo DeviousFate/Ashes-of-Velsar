@@ -67,7 +67,9 @@ function resolvedLayout(layout) {
 
 await mkdir(OUTPUT, { recursive: true });
 for (const [slug, layout] of Object.entries(sceneLayouts)) {
-  const background = await readFile(path.join(ROOT, "assets", "maps", slug));
+  const background = await readFile(path.join(ROOT, "assets", "maps", "official", slug));
+  const width = background.readUInt32BE(16);
+  const height = background.readUInt32BE(20);
   const previewLayout = resolvedLayout(layout);
   const geometry = Object.entries(colors)
     .map(([kind, color]) => lines(previewLayout[kind], color, kind === "secretDoors"))
@@ -78,8 +80,8 @@ for (const [slug, layout] of Object.entries(sceneLayouts)) {
     const color = token.disposition === 1 ? "#30d158" : token.disposition === 0 ? "#ffd60a" : "#ff453a";
     return `<g><circle cx="${cx}" cy="${cy}" r="29" fill="${color}" fill-opacity="0.36" stroke="${color}" stroke-width="4"${token.hidden ? ' stroke-dasharray="8 5"' : ""}/><text x="${cx}" y="${cy + 7}" text-anchor="middle" font-family="Arial" font-size="20" font-weight="700" fill="#fff" stroke="#000" stroke-width="4" paint-order="stroke">${escapeXml(index + 1)}</text></g>`;
   }).join("\n");
-  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="1448" height="1086" viewBox="0 0 1448 1086">
-<image width="1448" height="1086" href="data:image/png;base64,${background.toString("base64")}"/>
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}">
+<image width="${width}" height="${height}" href="data:image/png;base64,${background.toString("base64")}"/>
 <g opacity="0.92">${geometry}</g>
 <g>${tokens}</g>
 </svg>`;
