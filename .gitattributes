@@ -1,3 +1,4 @@
 # Foundry compendium packs are LevelDB databases. Even small pointer files such
 # as CURRENT must retain their exact bytes; CRLF conversion corrupts the pack.
-packs/** -text
+# Treat every pack file as binary so Git also avoids textual whitespace checks.
+packs/** binary

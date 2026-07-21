@@ -1,9 +1,11 @@
 #!/usr/bin/env node
 
 import { createRequire } from "node:module";
-import { copyFile, mkdir, readFile, rm } from "node:fs/promises";
+import { copyFile, mkdir, readFile, readdir, rm } from "node:fs/promises";
+import { tmpdir } from "node:os";
 import path from "node:path";
 import process from "node:process";
+import { officialEncounterActorIds, sceneLayouts } from "../source/scene-layouts.mjs";
 
 const MODULE_ID = "ashes-of-velsar";
 const MODULE_PATH = `modules/${MODULE_ID}`;
@@ -20,6 +22,7 @@ const foundryAppPath = process.env.FOUNDRY_APP_PATH
 const worldPath = process.env.AOV_WORLD_PATH
   ?? path.join(foundryDataPath, "worlds", "star-wars-echoes-of-the-republic");
 const worldImagePath = path.join(worldPath, "Outside Images");
+const sw5eModulePath = path.join(foundryDataPath, "modules", "sw5e-module");
 
 const require = createRequire(path.join(foundryAppPath, "package.json"));
 const { ClassicLevel } = require("classic-level");
@@ -98,6 +101,7 @@ const actorIds = new Set([
   "zdPrGvzoFH9rq1Ie"
 ]);
 const imperialActorIds = new Set(["IVG8XsGcbY3JtVHz", "l3JFZ0aZahnlv5OX", "g9reSEqGK1ID9YYT", "ym5vG10BPlnJvqxq"]);
+const packagedActorIds = new Set([...actorIds, ...officialEncounterActorIds]);
 
 const now = Date.now();
 const deepClone = (value) => structuredClone(value);
@@ -140,6 +144,27 @@ async function copyAsset(source, relativeTarget) {
   const target = path.join(ROOT, relativeTarget);
   await mkdir(path.dirname(target), { recursive: true });
   await copyFile(source, target);
+}
+
+async function readPackSnapshot(packPath, snapshotName) {
+  const snapshotPath = path.join(tmpdir(), "ashes-of-velsar-build", snapshotName);
+  await rm(snapshotPath, { recursive: true, force: true });
+  await mkdir(snapshotPath, { recursive: true });
+  for (const entry of await readdir(packPath, { withFileTypes: true })) {
+    if (!entry.isFile() || entry.name === "LOCK") continue;
+    await copyFile(path.join(packPath, entry.name), path.join(snapshotPath, entry.name));
+  }
+
+  const database = new ClassicLevel(snapshotPath, { keyEncoding: "utf8", valueEncoding: "json" });
+  const records = [];
+  try {
+    await database.open();
+    for await (const [key, value] of database.iterator()) records.push({ key, value });
+  } finally {
+    await database.close();
+    await rm(snapshotPath, { recursive: true, force: true });
+  }
+  return records;
 }
 
 async function writePack(name, records) {
@@ -245,6 +270,134 @@ function makeSceneNote(scene, index) {
   };
 }
 
+function embeddedId(prefix, sceneIndex, recordIndex) {
+  const suffixLength = 16 - prefix.length - 2;
+  return `${prefix}${String(sceneIndex + 1).padStart(2, "0")}${String(recordIndex + 1).padStart(suffixLength, "0")}`;
+}
+
+function chainSegments(chains = []) {
+  const segments = [];
+  for (const chain of chains) {
+    if (chain.length < 4 || chain.length % 2) throw new Error(`Invalid wall chain: ${chain.join(",")}`);
+    for (let index = 0; index <= chain.length - 4; index += 2) {
+      const segment = chain.slice(index, index + 4);
+      if (segment[0] === segment[2] && segment[1] === segment[3]) continue;
+      segments.push(segment);
+    }
+  }
+  return segments;
+}
+
+function subtractCollinearSegment(segment, cutter) {
+  const [x1, y1, x2, y2] = segment;
+  const [cx1, cy1, cx2, cy2] = cutter;
+  const vx = x2 - x1;
+  const vy = y2 - y1;
+  const lengthSquared = vx * vx + vy * vy;
+  const cross1 = vx * (cy1 - y1) - vy * (cx1 - x1);
+  const cross2 = vx * (cy2 - y1) - vy * (cx2 - x1);
+  if (lengthSquared === 0 || Math.abs(cross1) > 0.01 || Math.abs(cross2) > 0.01) return [segment];
+
+  const projection = (x, y) => ((x - x1) * vx + (y - y1) * vy) / lengthSquared;
+  const start = Math.max(0, Math.min(projection(cx1, cy1), projection(cx2, cy2)));
+  const end = Math.min(1, Math.max(projection(cx1, cy1), projection(cx2, cy2)));
+  if (end - start <= 0.0001) return [segment];
+  const pointAt = (position) => [
+    Math.round((x1 + vx * position) * 1000) / 1000,
+    Math.round((y1 + vy * position) * 1000) / 1000
+  ];
+  const output = [];
+  if (start > 0.0001) output.push([x1, y1, ...pointAt(start)]);
+  if (end < 0.9999) output.push([...pointAt(end), x2, y2]);
+  return output;
+}
+
+function subtractReplacementWalls(segments, replacements) {
+  let output = segments;
+  for (const replacement of replacements) {
+    output = output.flatMap((segment) => subtractCollinearSegment(segment, replacement));
+  }
+  return output;
+}
+
+function makeWall(id, coordinates, kind) {
+  const restrictions = {
+    solid: { light: 20, sight: 20, sound: 20, move: 20 },
+    door: { light: 20, sight: 20, sound: 20, move: 20 },
+    secretDoor: { light: 20, sight: 20, sound: 20, move: 20 },
+    window: { light: 0, sight: 0, sound: 10, move: 20 },
+    terrain: { light: 10, sight: 10, sound: 10, move: 20 },
+    barrier: { light: 0, sight: 0, sound: 10, move: 20 }
+  }[kind];
+  if (!restrictions) throw new Error(`Unknown wall kind ${kind}`);
+  return {
+    _id: id,
+    c: coordinates,
+    ...restrictions,
+    dir: 0,
+    door: kind === "door" ? 1 : kind === "secretDoor" ? 2 : 0,
+    ds: 0,
+    threshold: { light: null, sight: null, sound: null, attenuation: false },
+    animation: kind === "door" || kind === "secretDoor"
+      ? { type: "", texture: null, flip: false, double: false, direction: 1, duration: 750, strength: 1 }
+      : null,
+    doorSound: "",
+    flags: { [MODULE_ID]: { generated: true, kind } }
+  };
+}
+
+function localizeTokenTexture(src) {
+  if (!src) return src;
+  const original = src.split("?")[0];
+  if (!original.startsWith("tokenizer/")) return original;
+  return `${MODULE_PATH}/assets/actors/${path.basename(original)}`;
+}
+
+function makeSceneToken(actor, placement, sceneIndex, tokenIndex) {
+  if (!actor) throw new Error(`Missing actor ${placement.actorId} required by scene layout ${sceneIndex + 1}`);
+  const tokenId = embeddedId("AoVTok", sceneIndex, tokenIndex);
+  const deltaId = embeddedId("AoVDel", sceneIndex, tokenIndex);
+  const value = {
+    ...deepClone(actor.prototypeToken),
+    _id: tokenId,
+    name: placement.name ?? actor.name,
+    actorId: actor._id,
+    actorLink: false,
+    delta: deltaId,
+    x: placement.x,
+    y: placement.y,
+    elevation: placement.elevation ?? 0,
+    hidden: placement.hidden ?? false,
+    disposition: placement.disposition ?? actor.prototypeToken?.disposition ?? -1,
+    sort: tokenIndex,
+    shape: 4,
+    locked: false,
+    _movementHistory: [],
+    _regions: [],
+    flags: {
+      ...(actor.prototypeToken?.flags ?? {}),
+      [MODULE_ID]: { generated: true, staged: true }
+    }
+  };
+  value.texture = { ...(value.texture ?? {}), src: localizeTokenTexture(value.texture?.src) };
+  delete value.randomImg;
+  delete value.appendNumber;
+  delete value.prependAdjective;
+
+  const delta = {
+    _id: deltaId,
+    system: {},
+    items: [],
+    effects: [],
+    flags: { [MODULE_ID]: { generated: true } },
+    name: null,
+    type: null,
+    img: null,
+    ownership: null
+  };
+  return { tokenId, deltaId, value, delta };
+}
+
 function dashboardHtml() {
   return `<h1>Ashes of Velsar</h1>
 <p><strong>Adventure:</strong> four to six characters, levels 1–4<br><strong>Foundry:</strong> v13 / D&amp;D5e 5.2.5 / SW5E module 1.3.9</p>
@@ -256,7 +409,7 @@ function dashboardHtml() {
 <li>@UUID[${compendiumUuid("journals", "JournalEntry", handoutsId)}]{Player Handouts}</li>
 </ul>
 <h2>Rules Sources</h2>
-<p>Use the installed SW5E compendiums for rules, equipment, powers, conditions, and standard adversaries. The campaign pack contains only Velsar-specific actors.</p>
+<p>Use the installed SW5E compendiums for rules, equipment, powers, and conditions. The campaign pack contains the Velsar-specific cast plus the three standard SW5E adversaries required by the staged encounters.</p>
 <ul>
 <li><a href="https://sw5e.com/rules">Official SW5E Rules</a></li>
 <li><a href="https://github.com/sw5e-foundry/sw5e-module">SW5E Foundry Module</a></li>
@@ -275,7 +428,7 @@ function npcDirectoryHtml(actorRoots) {
     .sort((a, b) => a.value.name.localeCompare(b.value.name))
     .map(({ value }) => `<li>@UUID[${compendiumUuid("campaign", "Actor", value._id)}]{${value.name}}</li>`)
     .join("\n");
-  return `<h1>Campaign Actors</h1><p>Velsar-specific NPCs and the BT-9 Stargazer are stored here. Standard SW5E adversaries remain in the SW5E module’s compendiums.</p><ul>${items}</ul>`;
+  return `<h1>Campaign Actors</h1><p>Velsar-specific NPCs, the BT-9 Stargazer, and the Trooper, Scout Trooper, and Viper Probe Droid used by the staged encounters are stored here.</p><ul>${items}</ul>`;
 }
 
 function embedActor(root, recordMap) {
@@ -305,18 +458,29 @@ function embedJournal(root, recordMap) {
 function embedScene(root, recordMap) {
   const scene = deepClone(root);
   for (const collection of ["notes", "tokens", "walls", "lights", "sounds", "templates", "tiles", "drawings", "regions"]) {
-    scene[collection] = (root[collection] ?? []).map((id) =>
-      deepClone(recordMap.get(`!scenes.${collection}!${root._id}.${id}`))
-    ).filter(Boolean);
+    scene[collection] = (root[collection] ?? []).map((id) => {
+      const document = deepClone(recordMap.get(`!scenes.${collection}!${root._id}.${id}`));
+      if (collection === "tokens" && document && typeof document.delta === "string") {
+        document.delta = deepClone(recordMap.get(`!scenes.tokens.delta!${root._id}.${id}.${document.delta}`));
+      }
+      return document;
+    }).filter(Boolean);
   }
   return scene;
 }
 
-const [sourceActors, sourceJournals, sourceScenes] = await Promise.all([
+const [sourceActors, sourceJournals, sourceScenes, sw5eMonsterRecords] = await Promise.all([
   readJson("source/world/actors.json"),
   readJson("source/world/journals.json"),
-  readJson("source/world/scenes.json")
+  readJson("source/world/scenes.json"),
+  readPackSnapshot(path.join(sw5eModulePath, "packs", "monsters"), "sw5e-monsters")
 ]);
+const officialEncounterRecords = sw5eMonsterRecords
+  .filter(({ key }) => [...officialEncounterActorIds].some((actorId) => key.includes(actorId)))
+  .map(({ key, value }) => ({ key, value: deepClone(value) }));
+const tokenActorRoots = new Map([...sourceActors, ...officialEncounterRecords]
+  .filter(({ key }) => /^!actors![^!]+$/.test(key))
+  .map(({ value }) => [value._id, value]));
 
 for (const scene of mapDefinitions) {
   await copyAsset(path.join(worldImagePath, "Maps", scene.file), path.join("assets", "maps", scene.slug));
@@ -367,6 +531,7 @@ journalRecords.push({
 });
 
 const actorRootPreview = sourceActors
+  .concat(officialEncounterRecords)
   .filter(({ key }) => /^!actors![^!]+$/.test(key))
   .map(({ key, value }) => ({ key, value: deepClone(value) }));
 const dashboardPageRecords = [
@@ -389,6 +554,51 @@ for (const [index, definition] of mapDefinitions.entries()) {
   const scene = deepClone(sceneSourceRoots.get(definition.id) ?? sceneTemplate);
   const backgroundPath = `${MODULE_PATH}/assets/maps/${definition.slug}`;
   const note = makeSceneNote(definition, index);
+  const layout = sceneLayouts[definition.slug];
+  if (!layout) throw new Error(`Missing traced scene layout for ${definition.slug}`);
+  const embeddedRecords = [];
+  const wallIds = [];
+  let wallIndex = 0;
+  const wallSegments = {
+    solid: chainSegments(layout.solid),
+    doors: chainSegments(layout.doors),
+    secretDoors: chainSegments(layout.secretDoors),
+    windows: chainSegments(layout.windows),
+    terrain: chainSegments(layout.terrain),
+    barriers: chainSegments(layout.barriers)
+  };
+  wallSegments.solid = subtractReplacementWalls(
+    wallSegments.solid,
+    [...wallSegments.doors, ...wallSegments.secretDoors, ...wallSegments.windows]
+  );
+  for (const [property, kind] of [
+    ["solid", "solid"],
+    ["doors", "door"],
+    ["secretDoors", "secretDoor"],
+    ["windows", "window"],
+    ["terrain", "terrain"],
+    ["barriers", "barrier"]
+  ]) {
+    for (const coordinates of wallSegments[property]) {
+      const wallId = embeddedId("AoVWall", index, wallIndex++);
+      wallIds.push(wallId);
+      embeddedRecords.push({
+        key: `!scenes.walls!${definition.id}.${wallId}`,
+        value: makeWall(wallId, coordinates, kind)
+      });
+    }
+  }
+
+  const tokenIds = [];
+  for (const [tokenIndex, placement] of (layout.tokens ?? []).entries()) {
+    const staged = makeSceneToken(tokenActorRoots.get(placement.actorId), placement, index, tokenIndex);
+    tokenIds.push(staged.tokenId);
+    embeddedRecords.push({ key: `!scenes.tokens!${definition.id}.${staged.tokenId}`, value: staged.value });
+    embeddedRecords.push({
+      key: `!scenes.tokens.delta!${definition.id}.${staged.tokenId}.${staged.deltaId}`,
+      value: staged.delta
+    });
+  }
   scene._id = definition.id;
   scene.name = definition.name;
   scene.folder = sceneFolderIds[definition.folder];
@@ -415,8 +625,8 @@ for (const [index, definition] of mapDefinitions.entries()) {
   };
   scene.thumb = backgroundPath;
   scene.grid = { ...(scene.grid ?? {}), type: 0, size: 72, distance: 5, units: "ft" };
-  scene.tokens = [];
-  scene.walls = [];
+  scene.tokens = tokenIds;
+  scene.walls = wallIds;
   scene.lights = [];
   scene.sounds = [];
   scene.templates = [];
@@ -424,10 +634,19 @@ for (const [index, definition] of mapDefinitions.entries()) {
   scene.drawings = [];
   scene.regions = [];
   scene.notes = [note.id];
-  scene.flags = { ...scene.flags, [MODULE_ID]: { chapter: definition.page, sourceMap: definition.file } };
+  scene.flags = {
+    ...scene.flags,
+    [MODULE_ID]: {
+      chapter: definition.page,
+      sourceMap: definition.file,
+      tracedWalls: wallIds.length,
+      stagedTokens: tokenIds.length
+    }
+  };
   scene._stats = stats(scene._stats?.compendiumSource ?? null);
   sceneRecords.push({ key: `!scenes!${definition.id}`, value: scene });
   sceneRecords.push({ key: `!scenes.notes!${definition.id}.${note.id}`, value: note.value });
+  sceneRecords.push(...embeddedRecords);
 }
 for (const [key, name, sort, color] of [
   ["chapter1", "Chapter 1 — A Simple Job", 0, "#9e2b25"],
@@ -439,7 +658,8 @@ for (const [key, name, sort, color] of [
   sceneRecords.push({ key: `!folders!${sceneFolderIds[key]}`, value: folderDocument(sceneFolderIds[key], name, "Scene", sort, color) });
 }
 
-const actorRecords = sourceActors.map(({ key, value }) => ({ key, value: deepClone(value) }));
+const actorRecords = [...sourceActors, ...officialEncounterRecords]
+  .map(({ key, value }) => ({ key, value: deepClone(value) }));
 for (const record of actorRecords) {
   const rootMatch = /^!actors!([^!]+)$/.exec(record.key);
   if (!rootMatch) {
@@ -447,11 +667,19 @@ for (const record of actorRecords) {
     continue;
   }
   const actor = record.value;
-  if (!actorIds.has(actor._id)) continue;
+  if (!packagedActorIds.has(actor._id)) continue;
   actor.folder = actor._id === "0ml1uw24lJevFdH1"
     ? actorFolderIds.vehicles
-    : imperialActorIds.has(actor._id) ? actorFolderIds.imperial : actorFolderIds.campaign;
-  actor.flags = { ...actor.flags, [MODULE_ID]: { campaignActor: true } };
+    : imperialActorIds.has(actor._id) || officialEncounterActorIds.has(actor._id)
+      ? actorFolderIds.imperial
+      : actorFolderIds.campaign;
+  actor.flags = {
+    ...actor.flags,
+    [MODULE_ID]: {
+      campaignActor: true,
+      officialSw5eActor: officialEncounterActorIds.has(actor._id)
+    }
+  };
   actor._stats = stats(actor._stats?.compendiumSource ?? null);
 
   if (actor._id === "0ml1uw24lJevFdH1") {
@@ -459,6 +687,8 @@ for (const record of actorRecords) {
     if (actor.prototypeToken?.texture) actor.prototypeToken.texture.src = actor.img;
     continue;
   }
+
+  if (officialEncounterActorIds.has(actor._id)) continue;
 
   for (const target of [
     { holder: actor, field: "img" },

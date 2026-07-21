@@ -17,7 +17,7 @@ const { ClassicLevel } = require("classic-level");
 const expectedRoots = {
   journals: { expression: /^!journal![^!]+$/, count: 4 },
   scenes: { expression: /^!scenes![^!]+$/, count: 14 },
-  campaign: { expression: /^!actors![^!]+$/, count: 17 },
+  campaign: { expression: /^!actors![^!]+$/, count: 20 },
   adventure: { expression: /^!adventures![^!]+$/, count: 1 }
 };
 
@@ -83,6 +83,22 @@ function recordMap(records) {
   return new Map(records.map(({ key, value }) => [key, value]));
 }
 
+function collinearOverlap(first, second) {
+  const [x1, y1, x2, y2] = first;
+  const [cx1, cy1, cx2, cy2] = second;
+  const vx = x2 - x1;
+  const vy = y2 - y1;
+  const lengthSquared = vx * vx + vy * vy;
+  if (!lengthSquared) return false;
+  const cross1 = vx * (cy1 - y1) - vy * (cx1 - x1);
+  const cross2 = vx * (cy2 - y1) - vy * (cx2 - x1);
+  if (Math.abs(cross1) > 0.01 || Math.abs(cross2) > 0.01) return false;
+  const projection = (x, y) => ((x - x1) * vx + (y - y1) * vy) / lengthSquared;
+  const start = Math.max(0, Math.min(projection(cx1, cy1), projection(cx2, cy2)));
+  const end = Math.min(1, Math.max(projection(cx1, cy1), projection(cx2, cy2)));
+  return end - start > 0.0001;
+}
+
 const journalMap = recordMap(packData.journals);
 for (const { key, value } of packData.journals.filter(({ key }) => /^!journal![^!]+$/.test(key))) {
   for (const pageId of value.pages ?? []) {
@@ -100,21 +116,79 @@ for (const { key, value } of packData.scenes.filter(({ key }) => /^!scenes![^!]+
       failures.push(`${key} note ${noteId} references a missing journal page`);
     }
   }
+
+  if (!(value.walls?.length > 0)) failures.push(`${key} has no traced walls`);
+  if (!(value.tokens?.length > 0)) failures.push(`${key} has no staged tokens`);
+  for (const wallId of value.walls ?? []) {
+    const wall = sceneMap.get(`!scenes.walls!${value._id}.${wallId}`);
+    if (!wall) {
+      failures.push(`${key} references missing wall ${wallId}`);
+      continue;
+    }
+    if (!Array.isArray(wall.c) || wall.c.length !== 4 || wall.c.some((coordinate) => !Number.isFinite(coordinate))) {
+      failures.push(`${key} wall ${wallId} has invalid coordinates`);
+      continue;
+    }
+    const [x1, y1, x2, y2] = wall.c;
+    if ([x1, x2].some((x) => x < 0 || x > value.width) || [y1, y2].some((y) => y < 0 || y > value.height)) {
+      failures.push(`${key} wall ${wallId} falls outside the Scene bounds`);
+    }
+    if (x1 === x2 && y1 === y2) failures.push(`${key} wall ${wallId} has zero length`);
+  }
+  for (const tokenId of value.tokens ?? []) {
+    const token = sceneMap.get(`!scenes.tokens!${value._id}.${tokenId}`);
+    if (!token) {
+      failures.push(`${key} references missing token ${tokenId}`);
+      continue;
+    }
+    if (token.x < 0 || token.y < 0 || token.x >= value.width || token.y >= value.height) {
+      failures.push(`${key} token ${tokenId} falls outside the Scene bounds`);
+    }
+    if (typeof token.delta !== "string" || !sceneMap.has(`!scenes.tokens.delta!${value._id}.${tokenId}.${token.delta}`)) {
+      failures.push(`${key} token ${tokenId} references a missing ActorDelta`);
+    }
+  }
+  const doors = (value.walls ?? [])
+    .map((wallId) => sceneMap.get(`!scenes.walls!${value._id}.${wallId}`))
+    .filter((wall) => wall?.door > 0).length;
+  const sceneWalls = (value.walls ?? [])
+    .map((wallId) => sceneMap.get(`!scenes.walls!${value._id}.${wallId}`))
+    .filter(Boolean);
+  const solidWalls = sceneWalls.filter((wall) => wall.flags?.["ashes-of-velsar"]?.kind === "solid");
+  const replacements = sceneWalls.filter((wall) => ["door", "secretDoor", "window"].includes(wall.flags?.["ashes-of-velsar"]?.kind));
+  for (const solid of solidWalls) {
+    for (const replacement of replacements) {
+      if (collinearOverlap(solid.c, replacement.c)) {
+        failures.push(`${key} has an overlapping solid wall and ${replacement.flags["ashes-of-velsar"].kind}`);
+      }
+    }
+  }
+  console.log(`  ${value.name}: ${value.walls?.length ?? 0} walls, ${doors} doors, ${value.tokens?.length ?? 0} tokens`);
 }
 
 const actorMap = recordMap(packData.campaign);
+const actorRootIds = new Set(packData.campaign
+  .filter(({ key }) => /^!actors![^!]+$/.test(key))
+  .map(({ value }) => value._id));
 for (const { key, value } of packData.campaign.filter(({ key }) => /^!actors![^!]+$/.test(key))) {
   for (const itemId of value.items ?? []) {
     if (!actorMap.has(`!actors.items!${value._id}.${itemId}`)) failures.push(`${key} references missing item ${itemId}`);
   }
 }
+for (const { key, value } of packData.scenes.filter(({ key }) => /^!scenes.tokens![^!]+$/.test(key))) {
+  if (!actorRootIds.has(value.actorId)) failures.push(`${key} references missing campaign actor ${value.actorId}`);
+}
 
 const adventure = packData.adventure.find(({ key }) => /^!adventures![^!]+$/.test(key))?.value;
 if (adventure) {
-  if (adventure.actors?.length !== 17) failures.push("Adventure does not embed all 17 campaign actors");
+  if (adventure.actors?.length !== 20) failures.push("Adventure does not embed all 20 campaign actors");
   if (adventure.journal?.length !== 4) failures.push("Adventure does not embed all 4 journals");
   if (adventure.scenes?.length !== 14) failures.push("Adventure does not embed all 14 scenes");
   if (!adventure.scenes?.every((scene) => scene.notes?.length === 1)) failures.push("Adventure scenes did not embed their journal pins");
+  if (!adventure.scenes?.every((scene) => scene.walls?.length > 0)) failures.push("Adventure scenes did not embed traced walls");
+  if (!adventure.scenes?.every((scene) => scene.tokens?.every((token) => token.delta && typeof token.delta === "object"))) {
+    failures.push("Adventure scene tokens did not embed their ActorDelta documents");
+  }
 }
 
 const requiredAssets = [
