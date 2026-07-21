@@ -1,0 +1,3 @@
+# Foundry compendium packs are LevelDB databases. Even small pointer files such
+# as CURRENT must retain their exact bytes; CRLF conversion corrupts the pack.
+packs/** -text

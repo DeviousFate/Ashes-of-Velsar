@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 
 import { createRequire } from "node:module";
-import { access, readFile } from "node:fs/promises";
+import { access, cp, mkdir, readFile, rm } from "node:fs/promises";
+import { tmpdir } from "node:os";
 import path from "node:path";
 import process from "node:process";
 
@@ -24,7 +25,12 @@ const failures = [];
 const packData = {};
 
 async function readPack(name) {
-  const database = new ClassicLevel(path.join(ROOT, "packs", name), {
+  const snapshotPath = path.join(tmpdir(), "ashes-of-velsar-validation", name);
+  await rm(snapshotPath, { recursive: true, force: true });
+  await mkdir(path.dirname(snapshotPath), { recursive: true });
+  await cp(path.join(ROOT, "packs", name), snapshotPath, { recursive: true });
+
+  const database = new ClassicLevel(snapshotPath, {
     keyEncoding: "utf8",
     valueEncoding: "json"
   });

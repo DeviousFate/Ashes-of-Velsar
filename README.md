@@ -19,6 +19,16 @@ The SW5E rules and content module are maintained separately by the [SW5E Foundry
 
 ## Installation for local development
 
+For a normal installation, paste this URL into Foundry's **Install Module → Manifest URL** field:
+
+```text
+https://raw.githubusercontent.com/DeviousFate/Ashes-of-Velsar/main/module.json
+```
+
+After installation, enable **SW5E** and **Ashes of Velsar** in the world, open the Compendium Packs sidebar, and import **Ashes of Velsar — Complete Adventure**.
+
+### Local development
+
 Copy or junction this directory into Foundry's `Data/modules/ashes-of-velsar` directory, enable **SW5E** and **Ashes of Velsar**, then import **Ashes of Velsar — Complete Adventure** from the Compendium Packs sidebar.
 
 The build scripts infer the local Foundry installation and campaign world from `%LOCALAPPDATA%`. Override them with `FOUNDRY_DATA_PATH`, `FOUNDRY_APP_PATH`, or `AOV_WORLD_PATH` when needed.
