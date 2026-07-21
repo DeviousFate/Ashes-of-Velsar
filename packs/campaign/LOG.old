@@ -1,0 +1,5 @@
+2026/07/21-00:10:52.052 bddc Recovering log #3
+2026/07/21-00:10:52.053 bddc Level-0 table #5: started
+2026/07/21-00:10:52.059 bddc Level-0 table #5: 132469 bytes OK
+2026/07/21-00:10:52.068 bddc Delete type=0 #3
+2026/07/21-00:10:52.068 bddc Delete type=3 #2

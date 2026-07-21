@@ -1,0 +1,2501 @@
+[
+  {
+    "key": "!scenes!6vbTdZx3xrxOVgP6",
+    "value": {
+      "folder": "Wzt7K17SqCWIJSWS",
+      "name": "3. Ressik's Rustclaw Hideout",
+      "_id": "6vbTdZx3xrxOVgP6",
+      "active": false,
+      "navigation": true,
+      "navOrder": 0,
+      "background": {
+        "src": "worlds/star-wars-echoes-of-the-republic/Outside%20Images/Maps/Ressiks%20Rustclaw%20Hideout.png",
+        "anchorX": 0,
+        "anchorY": 0,
+        "offsetX": 0,
+        "offsetY": 0,
+        "fit": "fill",
+        "scaleX": 1,
+        "scaleY": 1,
+        "rotation": 0,
+        "tint": "#ffffff",
+        "alphaThreshold": 0
+      },
+      "foreground": null,
+      "foregroundElevation": null,
+      "thumb": "worlds/star-wars-echoes-of-the-republic/assets/scenes/6vbTdZx3xrxOVgP6-thumb.webp",
+      "width": 1448,
+      "height": 1086,
+      "padding": 0.25,
+      "initial": {
+        "x": null,
+        "y": null,
+        "scale": null
+      },
+      "backgroundColor": "#999999",
+      "grid": {
+        "type": 1,
+        "size": 100,
+        "style": "solidLines",
+        "thickness": 1,
+        "color": "#000000",
+        "alpha": 0.2,
+        "distance": 5,
+        "units": "ft"
+      },
+      "tokenVision": true,
+      "fog": {
+        "exploration": true,
+        "overlay": null,
+        "colors": {
+          "explored": null,
+          "unexplored": null
+        }
+      },
+      "environment": {
+        "darknessLevel": 0,
+        "darknessLock": false,
+        "globalLight": {
+          "enabled": false,
+          "alpha": 0.5,
+          "bright": false,
+          "color": null,
+          "coloration": 1,
+          "luminosity": 0,
+          "saturation": 0,
+          "contrast": 0,
+          "shadows": 0,
+          "darkness": {
+            "min": 0,
+            "max": 1
+          }
+        },
+        "cycle": true,
+        "base": {
+          "hue": 0,
+          "intensity": 0,
+          "luminosity": 0,
+          "saturation": 0,
+          "shadows": 0
+        },
+        "dark": {
+          "hue": 0.7138888888888889,
+          "intensity": 0,
+          "luminosity": -0.25,
+          "saturation": 0,
+          "shadows": 0
+        }
+      },
+      "drawings": [],
+      "tokens": [],
+      "lights": [],
+      "notes": [],
+      "sounds": [],
+      "regions": [],
+      "templates": [],
+      "tiles": [],
+      "walls": [],
+      "playlist": null,
+      "playlistSound": null,
+      "journal": null,
+      "journalEntryPage": null,
+      "weather": "",
+      "sort": 0,
+      "ownership": {
+        "default": 0,
+        "k7Zfpk6Ep5rASecv": 3
+      },
+      "flags": {
+        "levels": {
+          "backgroundElevation": 0,
+          "lightMasking": true,
+          "weatherElevation": null
+        },
+        "multi-token-edit": {
+          "blackBars": false
+        },
+        "wall-height": {
+          "advancedVision": true
+        }
+      },
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "dnd5e",
+        "systemVersion": "5.2.5",
+        "createdTime": 1784246248160,
+        "modifiedTime": 1784246394578,
+        "lastModifiedBy": "k7Zfpk6Ep5rASecv"
+      },
+      "navName": ""
+    }
+  },
+  {
+    "key": "!scenes!Cdc4vsuci2jeqQJN",
+    "value": {
+      "folder": "Wzt7K17SqCWIJSWS",
+      "name": "4. Doctor Vey's Clinic",
+      "_id": "Cdc4vsuci2jeqQJN",
+      "active": false,
+      "navigation": true,
+      "navOrder": 0,
+      "background": {
+        "src": "worlds/star-wars-echoes-of-the-republic/Outside%20Images/Maps/Doctor%20Vey%27s%20Clinic.png",
+        "anchorX": 0,
+        "anchorY": 0,
+        "offsetX": 0,
+        "offsetY": 0,
+        "fit": "fill",
+        "scaleX": 1,
+        "scaleY": 1,
+        "rotation": 0,
+        "tint": "#ffffff",
+        "alphaThreshold": 0
+      },
+      "foreground": null,
+      "foregroundElevation": null,
+      "thumb": "worlds/star-wars-echoes-of-the-republic/assets/scenes/Cdc4vsuci2jeqQJN-thumb.webp",
+      "width": 1448,
+      "height": 1086,
+      "padding": 0.25,
+      "initial": {
+        "x": null,
+        "y": null,
+        "scale": null
+      },
+      "backgroundColor": "#999999",
+      "grid": {
+        "type": 1,
+        "size": 100,
+        "style": "solidLines",
+        "thickness": 1,
+        "color": "#000000",
+        "alpha": 0.2,
+        "distance": 5,
+        "units": "ft"
+      },
+      "tokenVision": true,
+      "fog": {
+        "exploration": true,
+        "overlay": null,
+        "colors": {
+          "explored": null,
+          "unexplored": null
+        }
+      },
+      "environment": {
+        "darknessLevel": 0,
+        "darknessLock": false,
+        "globalLight": {
+          "enabled": false,
+          "alpha": 0.5,
+          "bright": false,
+          "color": null,
+          "coloration": 1,
+          "luminosity": 0,
+          "saturation": 0,
+          "contrast": 0,
+          "shadows": 0,
+          "darkness": {
+            "min": 0,
+            "max": 1
+          }
+        },
+        "cycle": true,
+        "base": {
+          "hue": 0,
+          "intensity": 0,
+          "luminosity": 0,
+          "saturation": 0,
+          "shadows": 0
+        },
+        "dark": {
+          "hue": 0.7138888888888889,
+          "intensity": 0,
+          "luminosity": -0.25,
+          "saturation": 0,
+          "shadows": 0
+        }
+      },
+      "drawings": [],
+      "tokens": [],
+      "lights": [],
+      "notes": [],
+      "sounds": [],
+      "regions": [],
+      "templates": [],
+      "tiles": [],
+      "walls": [],
+      "playlist": null,
+      "playlistSound": null,
+      "journal": null,
+      "journalEntryPage": null,
+      "weather": "",
+      "sort": 0,
+      "ownership": {
+        "default": 0,
+        "k7Zfpk6Ep5rASecv": 3
+      },
+      "flags": {
+        "levels": {
+          "backgroundElevation": 0,
+          "lightMasking": true,
+          "weatherElevation": null
+        },
+        "multi-token-edit": {
+          "blackBars": false
+        },
+        "wall-height": {
+          "advancedVision": true
+        }
+      },
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "dnd5e",
+        "systemVersion": "5.2.5",
+        "createdTime": 1784246267371,
+        "modifiedTime": 1784246335099,
+        "lastModifiedBy": "k7Zfpk6Ep5rASecv"
+      },
+      "navName": ""
+    }
+  },
+  {
+    "key": "!scenes!EL02sxuRACXvwSXT",
+    "value": {
+      "folder": "Wzt7K17SqCWIJSWS",
+      "name": "5. Southern Cut Checkpoint",
+      "_id": "EL02sxuRACXvwSXT",
+      "active": false,
+      "navigation": true,
+      "navOrder": 0,
+      "background": {
+        "src": "worlds/star-wars-echoes-of-the-republic/Outside%20Images/Maps/Southern%20Cut%20%20Imperial%20Checkpoint.png",
+        "anchorX": 0,
+        "anchorY": 0,
+        "offsetX": 0,
+        "offsetY": 0,
+        "fit": "fill",
+        "scaleX": 1,
+        "scaleY": 1,
+        "rotation": 0,
+        "tint": "#ffffff",
+        "alphaThreshold": 0
+      },
+      "foreground": null,
+      "foregroundElevation": null,
+      "thumb": "worlds/star-wars-echoes-of-the-republic/assets/scenes/EL02sxuRACXvwSXT-thumb.webp",
+      "width": 1448,
+      "height": 1086,
+      "padding": 0.25,
+      "initial": {
+        "x": null,
+        "y": null,
+        "scale": null
+      },
+      "backgroundColor": "#999999",
+      "grid": {
+        "type": 1,
+        "size": 100,
+        "style": "solidLines",
+        "thickness": 1,
+        "color": "#000000",
+        "alpha": 0.2,
+        "distance": 5,
+        "units": "ft"
+      },
+      "tokenVision": true,
+      "fog": {
+        "exploration": true,
+        "overlay": null,
+        "colors": {
+          "explored": null,
+          "unexplored": null
+        }
+      },
+      "environment": {
+        "darknessLevel": 0,
+        "darknessLock": false,
+        "globalLight": {
+          "enabled": false,
+          "alpha": 0.5,
+          "bright": false,
+          "color": null,
+          "coloration": 1,
+          "luminosity": 0,
+          "saturation": 0,
+          "contrast": 0,
+          "shadows": 0,
+          "darkness": {
+            "min": 0,
+            "max": 1
+          }
+        },
+        "cycle": true,
+        "base": {
+          "hue": 0,
+          "intensity": 0,
+          "luminosity": 0,
+          "saturation": 0,
+          "shadows": 0
+        },
+        "dark": {
+          "hue": 0.7138888888888889,
+          "intensity": 0,
+          "luminosity": -0.25,
+          "saturation": 0,
+          "shadows": 0
+        }
+      },
+      "drawings": [],
+      "tokens": [],
+      "lights": [],
+      "notes": [],
+      "sounds": [],
+      "regions": [],
+      "templates": [],
+      "tiles": [],
+      "walls": [],
+      "playlist": null,
+      "playlistSound": null,
+      "journal": null,
+      "journalEntryPage": null,
+      "weather": "",
+      "sort": 0,
+      "ownership": {
+        "default": 0,
+        "k7Zfpk6Ep5rASecv": 3
+      },
+      "flags": {
+        "levels": {
+          "backgroundElevation": 0,
+          "lightMasking": true,
+          "weatherElevation": null
+        },
+        "multi-token-edit": {
+          "blackBars": false
+        },
+        "wall-height": {
+          "advancedVision": true
+        }
+      },
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "dnd5e",
+        "systemVersion": "5.2.5",
+        "createdTime": 1784246283118,
+        "modifiedTime": 1784246401621,
+        "lastModifiedBy": "k7Zfpk6Ep5rASecv"
+      },
+      "navName": ""
+    }
+  },
+  {
+    "key": "!scenes!MkBY37RL9t0H1cqF",
+    "value": {
+      "folder": "Wzt7K17SqCWIJSWS",
+      "name": "2. The Bent Spanner",
+      "_id": "MkBY37RL9t0H1cqF",
+      "active": false,
+      "navigation": true,
+      "navOrder": 0,
+      "background": {
+        "src": "worlds/star-wars-echoes-of-the-republic/Outside%20Images/Maps/The%20Bent%20Spanner.png",
+        "anchorX": 0,
+        "anchorY": 0,
+        "offsetX": 0,
+        "offsetY": 0,
+        "fit": "fill",
+        "scaleX": 1,
+        "scaleY": 1,
+        "rotation": 0,
+        "tint": "#ffffff",
+        "alphaThreshold": 0
+      },
+      "foreground": null,
+      "foregroundElevation": null,
+      "thumb": "worlds/star-wars-echoes-of-the-republic/assets/scenes/MkBY37RL9t0H1cqF-thumb.webp",
+      "width": 1448,
+      "height": 1086,
+      "padding": 0.25,
+      "initial": {
+        "x": null,
+        "y": null,
+        "scale": null
+      },
+      "backgroundColor": "#999999",
+      "grid": {
+        "type": 1,
+        "size": 100,
+        "style": "solidLines",
+        "thickness": 1,
+        "color": "#000000",
+        "alpha": 0.2,
+        "distance": 5,
+        "units": "ft"
+      },
+      "tokenVision": true,
+      "fog": {
+        "exploration": true,
+        "overlay": null,
+        "colors": {
+          "explored": null,
+          "unexplored": null
+        }
+      },
+      "environment": {
+        "darknessLevel": 0,
+        "darknessLock": false,
+        "globalLight": {
+          "enabled": false,
+          "alpha": 0.5,
+          "bright": false,
+          "color": null,
+          "coloration": 1,
+          "luminosity": 0,
+          "saturation": 0,
+          "contrast": 0,
+          "shadows": 0,
+          "darkness": {
+            "min": 0,
+            "max": 1
+          }
+        },
+        "cycle": true,
+        "base": {
+          "hue": 0,
+          "intensity": 0,
+          "luminosity": 0,
+          "saturation": 0,
+          "shadows": 0
+        },
+        "dark": {
+          "hue": 0.7138888888888889,
+          "intensity": 0,
+          "luminosity": -0.25,
+          "saturation": 0,
+          "shadows": 0
+        }
+      },
+      "drawings": [],
+      "tokens": [],
+      "lights": [],
+      "notes": [],
+      "sounds": [],
+      "regions": [],
+      "templates": [],
+      "tiles": [],
+      "walls": [],
+      "playlist": null,
+      "playlistSound": null,
+      "journal": null,
+      "journalEntryPage": null,
+      "weather": "",
+      "sort": 0,
+      "ownership": {
+        "default": 0,
+        "k7Zfpk6Ep5rASecv": 3
+      },
+      "flags": {
+        "levels": {
+          "backgroundElevation": 0,
+          "lightMasking": true,
+          "weatherElevation": null
+        },
+        "multi-token-edit": {
+          "blackBars": false
+        },
+        "wall-height": {
+          "advancedVision": true
+        }
+      },
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "dnd5e",
+        "systemVersion": "5.2.5",
+        "createdTime": 1784246058862,
+        "modifiedTime": 1784246346471,
+        "lastModifiedBy": "k7Zfpk6Ep5rASecv"
+      },
+      "navName": ""
+    }
+  },
+  {
+    "key": "!scenes!MrN6tvX9p3j4aXs4",
+    "value": {
+      "folder": "Wzt7K17SqCWIJSWS",
+      "name": "6. Crashed Transport",
+      "_id": "MrN6tvX9p3j4aXs4",
+      "active": false,
+      "navigation": true,
+      "navOrder": 0,
+      "background": {
+        "src": "worlds/star-wars-echoes-of-the-republic/Outside%20Images/Maps/The%20Crashed%20Transport%20Site.png",
+        "anchorX": 0,
+        "anchorY": 0,
+        "offsetX": 0,
+        "offsetY": 0,
+        "fit": "fill",
+        "scaleX": 1,
+        "scaleY": 1,
+        "rotation": 0,
+        "tint": "#ffffff",
+        "alphaThreshold": 0
+      },
+      "foreground": null,
+      "foregroundElevation": null,
+      "thumb": "worlds/star-wars-echoes-of-the-republic/assets/scenes/MrN6tvX9p3j4aXs4-thumb.webp",
+      "width": 1448,
+      "height": 1086,
+      "padding": 0.25,
+      "initial": {
+        "x": null,
+        "y": null,
+        "scale": null
+      },
+      "backgroundColor": "#999999",
+      "grid": {
+        "type": 1,
+        "size": 100,
+        "style": "solidLines",
+        "thickness": 1,
+        "color": "#000000",
+        "alpha": 0.2,
+        "distance": 5,
+        "units": "ft"
+      },
+      "tokenVision": true,
+      "fog": {
+        "exploration": true,
+        "overlay": null,
+        "colors": {
+          "explored": null,
+          "unexplored": null
+        }
+      },
+      "environment": {
+        "darknessLevel": 0,
+        "darknessLock": false,
+        "globalLight": {
+          "enabled": false,
+          "alpha": 0.5,
+          "bright": false,
+          "color": null,
+          "coloration": 1,
+          "luminosity": 0,
+          "saturation": 0,
+          "contrast": 0,
+          "shadows": 0,
+          "darkness": {
+            "min": 0,
+            "max": 1
+          }
+        },
+        "cycle": true,
+        "base": {
+          "hue": 0,
+          "intensity": 0,
+          "luminosity": 0,
+          "saturation": 0,
+          "shadows": 0
+        },
+        "dark": {
+          "hue": 0.7138888888888889,
+          "intensity": 0,
+          "luminosity": -0.25,
+          "saturation": 0,
+          "shadows": 0
+        }
+      },
+      "drawings": [],
+      "tokens": [],
+      "lights": [],
+      "notes": [],
+      "sounds": [],
+      "regions": [],
+      "templates": [],
+      "tiles": [],
+      "walls": [],
+      "playlist": null,
+      "playlistSound": null,
+      "journal": null,
+      "journalEntryPage": null,
+      "weather": "",
+      "sort": 0,
+      "ownership": {
+        "default": 0,
+        "k7Zfpk6Ep5rASecv": 3
+      },
+      "flags": {
+        "levels": {
+          "backgroundElevation": 0,
+          "lightMasking": true,
+          "weatherElevation": null
+        },
+        "multi-token-edit": {
+          "blackBars": false
+        },
+        "wall-height": {
+          "advancedVision": true
+        }
+      },
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "dnd5e",
+        "systemVersion": "5.2.5",
+        "createdTime": 1784246314182,
+        "modifiedTime": 1784246324409,
+        "lastModifiedBy": "k7Zfpk6Ep5rASecv"
+      },
+      "navName": ""
+    }
+  },
+  {
+    "key": "!scenes!Qen9gVMLOpISn9Pk",
+    "value": {
+      "folder": "Wzt7K17SqCWIJSWS",
+      "name": "7. Tovan Rell’s Hidden Refuge",
+      "_id": "Qen9gVMLOpISn9Pk",
+      "active": false,
+      "navigation": true,
+      "navOrder": 0,
+      "background": {
+        "src": "worlds/star-wars-echoes-of-the-republic/Outside%20Images/Maps/Tovan%20Rell%27s%20Hidden%20Refuge.png",
+        "anchorX": 0,
+        "anchorY": 0,
+        "offsetX": 0,
+        "offsetY": 0,
+        "fit": "fill",
+        "scaleX": 1,
+        "scaleY": 1,
+        "rotation": 0,
+        "tint": "#ffffff",
+        "alphaThreshold": 0
+      },
+      "foreground": null,
+      "foregroundElevation": null,
+      "thumb": "worlds/star-wars-echoes-of-the-republic/assets/scenes/Qen9gVMLOpISn9Pk-thumb.webp",
+      "width": 1448,
+      "height": 1086,
+      "padding": 0.25,
+      "initial": {
+        "x": null,
+        "y": null,
+        "scale": null
+      },
+      "backgroundColor": "#999999",
+      "grid": {
+        "type": 1,
+        "size": 100,
+        "style": "solidLines",
+        "thickness": 1,
+        "color": "#000000",
+        "alpha": 0.2,
+        "distance": 5,
+        "units": "ft"
+      },
+      "tokenVision": true,
+      "fog": {
+        "exploration": true,
+        "overlay": null,
+        "colors": {
+          "explored": null,
+          "unexplored": null
+        }
+      },
+      "environment": {
+        "darknessLevel": 0,
+        "darknessLock": false,
+        "globalLight": {
+          "enabled": false,
+          "alpha": 0.5,
+          "bright": false,
+          "color": null,
+          "coloration": 1,
+          "luminosity": 0,
+          "saturation": 0,
+          "contrast": 0,
+          "shadows": 0,
+          "darkness": {
+            "min": 0,
+            "max": 1
+          }
+        },
+        "cycle": true,
+        "base": {
+          "hue": 0,
+          "intensity": 0,
+          "luminosity": 0,
+          "saturation": 0,
+          "shadows": 0
+        },
+        "dark": {
+          "hue": 0.7138888888888889,
+          "intensity": 0,
+          "luminosity": -0.25,
+          "saturation": 0,
+          "shadows": 0
+        }
+      },
+      "drawings": [],
+      "tokens": [],
+      "lights": [],
+      "notes": [],
+      "sounds": [],
+      "regions": [],
+      "templates": [],
+      "tiles": [],
+      "walls": [],
+      "playlist": null,
+      "playlistSound": null,
+      "journal": null,
+      "journalEntryPage": null,
+      "weather": "",
+      "sort": 0,
+      "ownership": {
+        "default": 0,
+        "k7Zfpk6Ep5rASecv": 3
+      },
+      "flags": {
+        "levels": {
+          "backgroundElevation": 0,
+          "lightMasking": true,
+          "weatherElevation": null
+        },
+        "multi-token-edit": {
+          "blackBars": false
+        },
+        "wall-height": {
+          "advancedVision": true
+        }
+      },
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "dnd5e",
+        "systemVersion": "5.2.5",
+        "createdTime": 1784246380245,
+        "modifiedTime": 1784246388333,
+        "lastModifiedBy": "k7Zfpk6Ep5rASecv"
+      },
+      "navName": ""
+    }
+  },
+  {
+    "key": "!scenes!jLuD2jD9RKIcsMaJ",
+    "value": {
+      "folder": "Wzt7K17SqCWIJSWS",
+      "name": "8. Prison Transport",
+      "_id": "jLuD2jD9RKIcsMaJ",
+      "active": false,
+      "navigation": true,
+      "navOrder": 0,
+      "background": {
+        "src": "worlds/star-wars-echoes-of-the-republic/Outside%20Images/Maps/Prisoner%20Transfer%20Ambush%20Site.png",
+        "anchorX": 0,
+        "anchorY": 0,
+        "offsetX": 0,
+        "offsetY": 0,
+        "fit": "fill",
+        "scaleX": 1,
+        "scaleY": 1,
+        "rotation": 0,
+        "tint": "#ffffff",
+        "alphaThreshold": 0
+      },
+      "foreground": null,
+      "foregroundElevation": null,
+      "thumb": "worlds/star-wars-echoes-of-the-republic/assets/scenes/jLuD2jD9RKIcsMaJ-thumb.webp",
+      "width": 1448,
+      "height": 1086,
+      "padding": 0.25,
+      "initial": {
+        "x": null,
+        "y": null,
+        "scale": null
+      },
+      "backgroundColor": "#999999",
+      "grid": {
+        "type": 1,
+        "size": 100,
+        "style": "solidLines",
+        "thickness": 1,
+        "color": "#000000",
+        "alpha": 0.2,
+        "distance": 5,
+        "units": "ft"
+      },
+      "tokenVision": true,
+      "fog": {
+        "exploration": true,
+        "overlay": null,
+        "colors": {
+          "explored": null,
+          "unexplored": null
+        }
+      },
+      "environment": {
+        "darknessLevel": 0,
+        "darknessLock": false,
+        "globalLight": {
+          "enabled": false,
+          "alpha": 0.5,
+          "bright": false,
+          "color": null,
+          "coloration": 1,
+          "luminosity": 0,
+          "saturation": 0,
+          "contrast": 0,
+          "shadows": 0,
+          "darkness": {
+            "min": 0,
+            "max": 1
+          }
+        },
+        "cycle": true,
+        "base": {
+          "hue": 0,
+          "intensity": 0,
+          "luminosity": 0,
+          "saturation": 0,
+          "shadows": 0
+        },
+        "dark": {
+          "hue": 0.7138888888888889,
+          "intensity": 0,
+          "luminosity": -0.25,
+          "saturation": 0,
+          "shadows": 0
+        }
+      },
+      "drawings": [],
+      "tokens": [],
+      "lights": [],
+      "notes": [],
+      "sounds": [],
+      "regions": [],
+      "templates": [],
+      "tiles": [],
+      "walls": [],
+      "playlist": null,
+      "playlistSound": null,
+      "journal": null,
+      "journalEntryPage": null,
+      "weather": "",
+      "sort": 0,
+      "ownership": {
+        "default": 0,
+        "k7Zfpk6Ep5rASecv": 3
+      },
+      "flags": {
+        "levels": {
+          "backgroundElevation": 0,
+          "lightMasking": true,
+          "weatherElevation": null
+        },
+        "multi-token-edit": {
+          "blackBars": false
+        },
+        "wall-height": {
+          "advancedVision": true
+        }
+      },
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "dnd5e",
+        "systemVersion": "5.2.5",
+        "createdTime": 1784246419858,
+        "modifiedTime": 1784246451374,
+        "lastModifiedBy": "k7Zfpk6Ep5rASecv"
+      },
+      "navName": ""
+    }
+  },
+  {
+    "key": "!scenes!nZOXeCzRCNObMGNa",
+    "value": {
+      "folder": "Wzt7K17SqCWIJSWS",
+      "name": "9. Davik Renn’s Hidden Stargazer Hangar",
+      "_id": "nZOXeCzRCNObMGNa",
+      "active": false,
+      "navigation": true,
+      "navOrder": 0,
+      "background": {
+        "src": "worlds/star-wars-echoes-of-the-republic/Outside%20Images/Maps/Davik%20Renn%27s%20Hidden%20Hangar.png",
+        "anchorX": 0,
+        "anchorY": 0,
+        "offsetX": 0,
+        "offsetY": 0,
+        "fit": "fill",
+        "scaleX": 1,
+        "scaleY": 1,
+        "rotation": 0,
+        "tint": "#ffffff",
+        "alphaThreshold": 0
+      },
+      "foreground": null,
+      "foregroundElevation": null,
+      "thumb": "worlds/star-wars-echoes-of-the-republic/assets/scenes/nZOXeCzRCNObMGNa-thumb.webp",
+      "width": 1448,
+      "height": 1086,
+      "padding": 0.25,
+      "initial": {
+        "x": null,
+        "y": null,
+        "scale": null
+      },
+      "backgroundColor": "#999999",
+      "grid": {
+        "type": 1,
+        "size": 100,
+        "style": "solidLines",
+        "thickness": 1,
+        "color": "#000000",
+        "alpha": 0.2,
+        "distance": 5,
+        "units": "ft"
+      },
+      "tokenVision": true,
+      "fog": {
+        "exploration": true,
+        "overlay": null,
+        "colors": {
+          "explored": null,
+          "unexplored": null
+        }
+      },
+      "environment": {
+        "darknessLevel": 0,
+        "darknessLock": false,
+        "globalLight": {
+          "enabled": false,
+          "alpha": 0.5,
+          "bright": false,
+          "color": null,
+          "coloration": 1,
+          "luminosity": 0,
+          "saturation": 0,
+          "contrast": 0,
+          "shadows": 0,
+          "darkness": {
+            "min": 0,
+            "max": 1
+          }
+        },
+        "cycle": true,
+        "base": {
+          "hue": 0,
+          "intensity": 0,
+          "luminosity": 0,
+          "saturation": 0,
+          "shadows": 0
+        },
+        "dark": {
+          "hue": 0.7138888888888889,
+          "intensity": 0,
+          "luminosity": -0.25,
+          "saturation": 0,
+          "shadows": 0
+        }
+      },
+      "drawings": [],
+      "tokens": [],
+      "lights": [],
+      "notes": [],
+      "sounds": [],
+      "regions": [],
+      "templates": [],
+      "tiles": [],
+      "walls": [],
+      "playlist": null,
+      "playlistSound": null,
+      "journal": null,
+      "journalEntryPage": null,
+      "weather": "",
+      "sort": 0,
+      "ownership": {
+        "default": 0,
+        "k7Zfpk6Ep5rASecv": 3
+      },
+      "flags": {
+        "levels": {
+          "backgroundElevation": 0,
+          "lightMasking": true,
+          "weatherElevation": null
+        },
+        "multi-token-edit": {
+          "blackBars": false
+        },
+        "wall-height": {
+          "advancedVision": true
+        }
+      },
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "dnd5e",
+        "systemVersion": "5.2.5",
+        "createdTime": 1784246435645,
+        "modifiedTime": 1784246446177,
+        "lastModifiedBy": "k7Zfpk6Ep5rASecv"
+      },
+      "navName": ""
+    }
+  },
+  {
+    "key": "!scenes!xk0d9gBiaJHvZewJ",
+    "value": {
+      "folder": "Wzt7K17SqCWIJSWS",
+      "name": "1. Abandoned Compressor Station and Eastern Scrapyard",
+      "_id": "xk0d9gBiaJHvZewJ",
+      "active": false,
+      "navigation": true,
+      "navOrder": 0,
+      "background": {
+        "src": "worlds/star-wars-echoes-of-the-republic/Outside%20Images/Maps/Abandoned%20Compressor%20Station%20and%20Eastern%20Scrapyard.png",
+        "anchorX": 0,
+        "anchorY": 0,
+        "offsetX": 0,
+        "offsetY": 0,
+        "fit": "fill",
+        "scaleX": 1,
+        "scaleY": 1,
+        "rotation": 0,
+        "tint": "#ffffff",
+        "alphaThreshold": 0
+      },
+      "foreground": null,
+      "foregroundElevation": null,
+      "thumb": "worlds/star-wars-echoes-of-the-republic/assets/scenes/xk0d9gBiaJHvZewJ-thumb.webp",
+      "width": 1448,
+      "height": 1086,
+      "padding": 0.25,
+      "initial": {
+        "x": null,
+        "y": null,
+        "scale": null
+      },
+      "backgroundColor": "#999999",
+      "grid": {
+        "type": 1,
+        "size": 100,
+        "style": "solidLines",
+        "thickness": 1,
+        "color": "#000000",
+        "alpha": 0.2,
+        "distance": 5,
+        "units": "ft"
+      },
+      "tokenVision": true,
+      "fog": {
+        "exploration": true,
+        "overlay": null,
+        "colors": {
+          "explored": null,
+          "unexplored": null
+        }
+      },
+      "environment": {
+        "darknessLevel": 0,
+        "darknessLock": false,
+        "globalLight": {
+          "enabled": false,
+          "alpha": 0.5,
+          "bright": false,
+          "color": null,
+          "coloration": 1,
+          "luminosity": 0,
+          "saturation": 0,
+          "contrast": 0,
+          "shadows": 0,
+          "darkness": {
+            "min": 0,
+            "max": 1
+          }
+        },
+        "cycle": true,
+        "base": {
+          "hue": 0,
+          "intensity": 0,
+          "luminosity": 0,
+          "saturation": 0,
+          "shadows": 0
+        },
+        "dark": {
+          "hue": 0.7138888888888889,
+          "intensity": 0,
+          "luminosity": -0.25,
+          "saturation": 0,
+          "shadows": 0
+        }
+      },
+      "drawings": [],
+      "tokens": [
+        "PluLrrOhD0Z3kA9z",
+        "X0pQc49xONHan0i6",
+        "fY3aEXZdAHKtARPD",
+        "O2XrE6kBD7AjfxzC",
+        "qu7UOQhK0D6yfx7F",
+        "FF4bm57HtKaHejYU"
+      ],
+      "lights": [],
+      "notes": [],
+      "sounds": [],
+      "regions": [],
+      "templates": [],
+      "tiles": [],
+      "walls": [
+        "ylJYupgEkF0XG1xV",
+        "GUVSBgYALMsATImW",
+        "mBkxjkxC4GQbgL7F",
+        "F7LcT9KD0wewsQ3H",
+        "mNh5WSaaU5aPItoG",
+        "0FMeXSJlyzYCElUA",
+        "whpR1XVblWOZthgb",
+        "UZYB5HD9sE3PiHgD",
+        "nMAcSlezroJkn6Ee",
+        "w9mFDKEH7PB6WWtJ",
+        "ZjbeF9CKuwg4yxRX",
+        "tFlkS6BKbrIwgXap",
+        "WcEMJenRvD0qBOaa",
+        "qovazadftobXlIo9",
+        "IbJz69iqSjcrsNIn",
+        "gRCp9CS7C3JgWjl7",
+        "cbUH9ORILgMqyylX",
+        "jgNE6DitpsDj3Lfn",
+        "uMe2gK8ZjjVzHEre",
+        "hOLCIdlYS13nZnBC"
+      ],
+      "playlist": null,
+      "playlistSound": null,
+      "journal": null,
+      "journalEntryPage": null,
+      "weather": "",
+      "sort": 0,
+      "ownership": {
+        "default": 0,
+        "k7Zfpk6Ep5rASecv": 3
+      },
+      "flags": {
+        "levels": {
+          "backgroundElevation": 0,
+          "lightMasking": true,
+          "weatherElevation": null
+        },
+        "multi-token-edit": {
+          "blackBars": false
+        },
+        "wall-height": {
+          "advancedVision": true
+        }
+      },
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "dnd5e",
+        "systemVersion": "5.2.5",
+        "createdTime": 1784245947229,
+        "modifiedTime": 1784246329552,
+        "lastModifiedBy": "k7Zfpk6Ep5rASecv"
+      },
+      "navName": ""
+    }
+  },
+  {
+    "key": "!scenes.tokens!xk0d9gBiaJHvZewJ.FF4bm57HtKaHejYU",
+    "value": {
+      "name": "Player Character",
+      "displayName": 0,
+      "actorLink": true,
+      "width": 1,
+      "height": 1,
+      "texture": {
+        "src": "tokenizer/pc-images/yundar.Token.webp?1784236413095",
+        "anchorX": 0.5,
+        "anchorY": 0.5,
+        "offsetX": 0,
+        "offsetY": 0,
+        "fit": "contain",
+        "scaleX": 1,
+        "scaleY": 1,
+        "rotation": 0,
+        "tint": "#ffffff",
+        "alphaThreshold": 0.75
+      },
+      "lockRotation": false,
+      "rotation": 0,
+      "alpha": 1,
+      "disposition": 1,
+      "displayBars": 0,
+      "bar1": {
+        "attribute": "attributes.hp"
+      },
+      "bar2": {
+        "attribute": null
+      },
+      "light": {
+        "negative": false,
+        "priority": 0,
+        "alpha": 0.5,
+        "angle": 360,
+        "bright": 0,
+        "color": null,
+        "coloration": 1,
+        "dim": 0,
+        "attenuation": 0.5,
+        "luminosity": 0.5,
+        "saturation": 0,
+        "contrast": 0,
+        "shadows": 0,
+        "animation": {
+          "type": null,
+          "speed": 5,
+          "intensity": 5,
+          "reverse": false
+        },
+        "darkness": {
+          "min": 0,
+          "max": 1
+        }
+      },
+      "sight": {
+        "enabled": true,
+        "range": 0,
+        "angle": 360,
+        "visionMode": "basic",
+        "color": null,
+        "attenuation": 0.1,
+        "brightness": 0,
+        "saturation": 0,
+        "contrast": 0
+      },
+      "detectionModes": [],
+      "occludable": {
+        "radius": 0
+      },
+      "ring": {
+        "enabled": false,
+        "colors": {
+          "ring": null,
+          "background": null
+        },
+        "effects": 1,
+        "subject": {
+          "scale": 1,
+          "texture": null
+        }
+      },
+      "turnMarker": {
+        "mode": 1,
+        "animation": null,
+        "src": null,
+        "disposition": false
+      },
+      "movementAction": null,
+      "flags": {},
+      "actorId": "fz5yMHPpVQZNq9ib",
+      "hidden": false,
+      "sort": 4,
+      "shape": 4,
+      "_id": "FF4bm57HtKaHejYU",
+      "delta": "FF4bm57HtKaHejYU",
+      "x": 900,
+      "y": 500,
+      "elevation": 0,
+      "locked": false,
+      "_movementHistory": [],
+      "_regions": []
+    }
+  },
+  {
+    "key": "!scenes.tokens!xk0d9gBiaJHvZewJ.O2XrE6kBD7AjfxzC",
+    "value": {
+      "name": "Player Character (2)",
+      "displayName": 0,
+      "actorLink": true,
+      "width": 1,
+      "height": 1,
+      "texture": {
+        "src": "tokenizer/pc-images/dug_durich.Token.webp?1784229106214",
+        "anchorX": 0.5,
+        "anchorY": 0.5,
+        "offsetX": 0,
+        "offsetY": 0,
+        "fit": "contain",
+        "scaleX": 1,
+        "scaleY": 1,
+        "rotation": 0,
+        "tint": "#ffffff",
+        "alphaThreshold": 0.75
+      },
+      "lockRotation": false,
+      "rotation": 0,
+      "alpha": 1,
+      "disposition": 1,
+      "displayBars": 0,
+      "bar1": {
+        "attribute": "attributes.hp"
+      },
+      "bar2": {
+        "attribute": null
+      },
+      "light": {
+        "negative": false,
+        "priority": 0,
+        "alpha": 0.5,
+        "angle": 360,
+        "bright": 0,
+        "color": null,
+        "coloration": 1,
+        "dim": 0,
+        "attenuation": 0.5,
+        "luminosity": 0.5,
+        "saturation": 0,
+        "contrast": 0,
+        "shadows": 0,
+        "animation": {
+          "type": null,
+          "speed": 5,
+          "intensity": 5,
+          "reverse": false
+        },
+        "darkness": {
+          "min": 0,
+          "max": 1
+        }
+      },
+      "sight": {
+        "enabled": true,
+        "range": 0,
+        "angle": 360,
+        "visionMode": "basic",
+        "color": null,
+        "attenuation": 0.1,
+        "brightness": 0,
+        "saturation": 0,
+        "contrast": 0
+      },
+      "detectionModes": [],
+      "occludable": {
+        "radius": 0
+      },
+      "ring": {
+        "enabled": false,
+        "colors": {
+          "ring": null,
+          "background": null
+        },
+        "effects": 1,
+        "subject": {
+          "scale": 1,
+          "texture": null
+        }
+      },
+      "turnMarker": {
+        "mode": 1,
+        "animation": null,
+        "src": null,
+        "disposition": false
+      },
+      "movementAction": null,
+      "flags": {},
+      "actorId": "v9nrF2M1NLr0RUZw",
+      "hidden": false,
+      "sort": 2,
+      "shape": 4,
+      "_id": "O2XrE6kBD7AjfxzC",
+      "delta": "O2XrE6kBD7AjfxzC",
+      "x": 800,
+      "y": 400,
+      "elevation": 0,
+      "locked": false,
+      "_movementHistory": [],
+      "_regions": []
+    }
+  },
+  {
+    "key": "!scenes.tokens!xk0d9gBiaJHvZewJ.PluLrrOhD0Z3kA9z",
+    "value": {
+      "name": "Keelo Venn",
+      "displayName": 0,
+      "actorLink": false,
+      "width": 1,
+      "height": 1,
+      "texture": {
+        "src": "tokenizer/npc-images/keelo_venn.Token.webp?1784231728177",
+        "anchorX": 0.5,
+        "anchorY": 0.5,
+        "offsetX": 0,
+        "offsetY": 0,
+        "fit": "contain",
+        "scaleX": 1,
+        "scaleY": 1,
+        "rotation": 0,
+        "tint": "#ffffff",
+        "alphaThreshold": 0.75
+      },
+      "lockRotation": false,
+      "rotation": 0,
+      "alpha": 1,
+      "disposition": -1,
+      "displayBars": 0,
+      "bar1": {
+        "attribute": "attributes.hp"
+      },
+      "bar2": {
+        "attribute": null
+      },
+      "light": {
+        "negative": false,
+        "priority": 0,
+        "alpha": 0.5,
+        "angle": 360,
+        "bright": 0,
+        "color": null,
+        "coloration": 1,
+        "dim": 0,
+        "attenuation": 0.5,
+        "luminosity": 0.5,
+        "saturation": 0,
+        "contrast": 0,
+        "shadows": 0,
+        "animation": {
+          "type": null,
+          "speed": 5,
+          "intensity": 5,
+          "reverse": false
+        },
+        "darkness": {
+          "min": 0,
+          "max": 1
+        }
+      },
+      "sight": {
+        "enabled": false,
+        "range": 0,
+        "angle": 360,
+        "visionMode": "basic",
+        "color": null,
+        "attenuation": 0.1,
+        "brightness": 0,
+        "saturation": 0,
+        "contrast": 0
+      },
+      "detectionModes": [],
+      "occludable": {
+        "radius": 0
+      },
+      "ring": {
+        "enabled": false,
+        "colors": {
+          "ring": null,
+          "background": null
+        },
+        "effects": 1,
+        "subject": {
+          "scale": 1,
+          "texture": null
+        }
+      },
+      "turnMarker": {
+        "mode": 1,
+        "animation": null,
+        "src": null,
+        "disposition": false
+      },
+      "movementAction": null,
+      "flags": {},
+      "actorId": "oaOJSg6s2xEWWKnD",
+      "hidden": false,
+      "sort": 0,
+      "shape": 4,
+      "_id": "PluLrrOhD0Z3kA9z",
+      "delta": "OedLxLwvrCNRYlA3",
+      "x": 1500,
+      "y": 400,
+      "elevation": 10,
+      "locked": false,
+      "_movementHistory": [],
+      "_regions": []
+    }
+  },
+  {
+    "key": "!scenes.tokens!xk0d9gBiaJHvZewJ.X0pQc49xONHan0i6",
+    "value": {
+      "name": "Rustclaw Fighter",
+      "displayName": 0,
+      "actorLink": false,
+      "width": 1,
+      "height": 1,
+      "texture": {
+        "src": "tokenizer/npc-images/rustclaw_fighter.Token.webp?1784229647967",
+        "anchorX": 0.5,
+        "anchorY": 0.5,
+        "offsetX": 0,
+        "offsetY": 0,
+        "fit": "contain",
+        "scaleX": 1,
+        "scaleY": 1,
+        "rotation": 0,
+        "tint": "#ffffff",
+        "alphaThreshold": 0.75
+      },
+      "lockRotation": false,
+      "rotation": 0,
+      "alpha": 1,
+      "disposition": -1,
+      "displayBars": 0,
+      "bar1": {
+        "attribute": "attributes.hp"
+      },
+      "bar2": {
+        "attribute": null
+      },
+      "light": {
+        "negative": false,
+        "priority": 0,
+        "alpha": 0.5,
+        "angle": 360,
+        "bright": 0,
+        "color": null,
+        "coloration": 1,
+        "dim": 0,
+        "attenuation": 0.5,
+        "luminosity": 0.5,
+        "saturation": 0,
+        "contrast": 0,
+        "shadows": 0,
+        "animation": {
+          "type": null,
+          "speed": 5,
+          "intensity": 5,
+          "reverse": false
+        },
+        "darkness": {
+          "min": 0,
+          "max": 1
+        }
+      },
+      "sight": {
+        "enabled": false,
+        "range": 0,
+        "angle": 360,
+        "visionMode": "basic",
+        "color": null,
+        "attenuation": 0.1,
+        "brightness": 0,
+        "saturation": 0,
+        "contrast": 0
+      },
+      "detectionModes": [],
+      "occludable": {
+        "radius": 0
+      },
+      "ring": {
+        "enabled": false,
+        "colors": {
+          "ring": null,
+          "background": null
+        },
+        "effects": 1,
+        "subject": {
+          "scale": 1,
+          "texture": null
+        }
+      },
+      "turnMarker": {
+        "mode": 1,
+        "animation": null,
+        "src": null,
+        "disposition": false
+      },
+      "movementAction": null,
+      "flags": {},
+      "actorId": "xaclhcdT5TyhAMlV",
+      "hidden": false,
+      "sort": 1,
+      "shape": 4,
+      "_id": "X0pQc49xONHan0i6",
+      "delta": "m8XrmQRd0gIEoJYz",
+      "x": 1300,
+      "y": 900,
+      "elevation": 10,
+      "locked": false,
+      "_movementHistory": [],
+      "_regions": []
+    }
+  },
+  {
+    "key": "!scenes.tokens!xk0d9gBiaJHvZewJ.fY3aEXZdAHKtARPD",
+    "value": {
+      "name": "Rustclaw Fighter",
+      "displayName": 0,
+      "actorLink": false,
+      "width": 1,
+      "height": 1,
+      "texture": {
+        "src": "tokenizer/npc-images/rustclaw_fighter.Token.webp?1784229647967",
+        "anchorX": 0.5,
+        "anchorY": 0.5,
+        "offsetX": 0,
+        "offsetY": 0,
+        "fit": "contain",
+        "scaleX": 1,
+        "scaleY": 1,
+        "rotation": 0,
+        "tint": "#ffffff",
+        "alphaThreshold": 0.75
+      },
+      "lockRotation": false,
+      "rotation": 0,
+      "alpha": 1,
+      "disposition": -1,
+      "displayBars": 0,
+      "bar1": {
+        "attribute": "attributes.hp"
+      },
+      "bar2": {
+        "attribute": null
+      },
+      "light": {
+        "negative": false,
+        "priority": 0,
+        "alpha": 0.5,
+        "angle": 360,
+        "bright": 0,
+        "color": null,
+        "coloration": 1,
+        "dim": 0,
+        "attenuation": 0.5,
+        "luminosity": 0.5,
+        "saturation": 0,
+        "contrast": 0,
+        "shadows": 0,
+        "animation": {
+          "type": null,
+          "speed": 5,
+          "intensity": 5,
+          "reverse": false
+        },
+        "darkness": {
+          "min": 0,
+          "max": 1
+        }
+      },
+      "sight": {
+        "enabled": false,
+        "range": 0,
+        "angle": 360,
+        "visionMode": "basic",
+        "color": null,
+        "attenuation": 0.1,
+        "brightness": 0,
+        "saturation": 0,
+        "contrast": 0
+      },
+      "detectionModes": [],
+      "occludable": {
+        "radius": 0
+      },
+      "ring": {
+        "enabled": false,
+        "colors": {
+          "ring": null,
+          "background": null
+        },
+        "effects": 1,
+        "subject": {
+          "scale": 1,
+          "texture": null
+        }
+      },
+      "turnMarker": {
+        "mode": 1,
+        "animation": null,
+        "src": null,
+        "disposition": false
+      },
+      "movementAction": null,
+      "flags": {},
+      "actorId": "xaclhcdT5TyhAMlV",
+      "hidden": false,
+      "sort": 1,
+      "shape": 4,
+      "delta": "m8XrmQRd0gIEoJYz",
+      "x": 1000,
+      "y": 1000,
+      "elevation": 0,
+      "locked": false,
+      "_movementHistory": [],
+      "_regions": [],
+      "_id": "fY3aEXZdAHKtARPD"
+    }
+  },
+  {
+    "key": "!scenes.tokens!xk0d9gBiaJHvZewJ.qu7UOQhK0D6yfx7F",
+    "value": {
+      "name": "Player Character (4)",
+      "displayName": 0,
+      "actorLink": true,
+      "width": 1,
+      "height": 1,
+      "texture": {
+        "src": "tokenizer/pc-images/kaelis_veyn.Token.webp?1784242457199",
+        "anchorX": 0.5,
+        "anchorY": 0.5,
+        "offsetX": 0,
+        "offsetY": 0,
+        "fit": "contain",
+        "scaleX": 1,
+        "scaleY": 1,
+        "rotation": 0,
+        "tint": "#ffffff",
+        "alphaThreshold": 0.75
+      },
+      "lockRotation": false,
+      "rotation": 0,
+      "alpha": 1,
+      "disposition": 1,
+      "displayBars": 0,
+      "bar1": {
+        "attribute": "attributes.hp"
+      },
+      "bar2": {
+        "attribute": null
+      },
+      "light": {
+        "negative": false,
+        "priority": 0,
+        "alpha": 0.5,
+        "angle": 360,
+        "bright": 0,
+        "color": null,
+        "coloration": 1,
+        "dim": 0,
+        "attenuation": 0.5,
+        "luminosity": 0.5,
+        "saturation": 0,
+        "contrast": 0,
+        "shadows": 0,
+        "animation": {
+          "type": null,
+          "speed": 5,
+          "intensity": 5,
+          "reverse": false
+        },
+        "darkness": {
+          "min": 0,
+          "max": 1
+        }
+      },
+      "sight": {
+        "enabled": true,
+        "range": 0,
+        "angle": 360,
+        "visionMode": "basic",
+        "color": null,
+        "attenuation": 0.1,
+        "brightness": 0,
+        "saturation": 0,
+        "contrast": 0
+      },
+      "detectionModes": [],
+      "occludable": {
+        "radius": 0
+      },
+      "ring": {
+        "enabled": false,
+        "colors": {
+          "ring": null,
+          "background": null
+        },
+        "effects": 1,
+        "subject": {
+          "scale": 1,
+          "texture": null
+        }
+      },
+      "turnMarker": {
+        "mode": 1,
+        "animation": null,
+        "src": null,
+        "disposition": false
+      },
+      "movementAction": null,
+      "flags": {},
+      "actorId": "8xklDmNLusLDs1Jx",
+      "hidden": false,
+      "sort": 3,
+      "shape": 4,
+      "_id": "qu7UOQhK0D6yfx7F",
+      "delta": "qu7UOQhK0D6yfx7F",
+      "x": 1000,
+      "y": 400,
+      "elevation": 0,
+      "locked": false,
+      "_movementHistory": [],
+      "_regions": []
+    }
+  },
+  {
+    "key": "!scenes.tokens.delta!xk0d9gBiaJHvZewJ.FF4bm57HtKaHejYU.FF4bm57HtKaHejYU",
+    "value": {
+      "_id": "FF4bm57HtKaHejYU",
+      "system": {},
+      "flags": {},
+      "name": null,
+      "type": null,
+      "img": null,
+      "items": [],
+      "effects": [],
+      "ownership": null
+    }
+  },
+  {
+    "key": "!scenes.tokens.delta!xk0d9gBiaJHvZewJ.O2XrE6kBD7AjfxzC.O2XrE6kBD7AjfxzC",
+    "value": {
+      "_id": "O2XrE6kBD7AjfxzC",
+      "system": {},
+      "flags": {},
+      "name": null,
+      "type": null,
+      "img": null,
+      "items": [],
+      "effects": [],
+      "ownership": null
+    }
+  },
+  {
+    "key": "!scenes.tokens.delta!xk0d9gBiaJHvZewJ.PluLrrOhD0Z3kA9z.OedLxLwvrCNRYlA3",
+    "value": {
+      "_id": "OedLxLwvrCNRYlA3",
+      "system": {},
+      "items": [],
+      "effects": [],
+      "flags": {},
+      "name": null,
+      "type": null,
+      "img": null,
+      "ownership": null
+    }
+  },
+  {
+    "key": "!scenes.tokens.delta!xk0d9gBiaJHvZewJ.X0pQc49xONHan0i6.m8XrmQRd0gIEoJYz",
+    "value": {
+      "_id": "m8XrmQRd0gIEoJYz",
+      "system": {},
+      "items": [],
+      "effects": [],
+      "flags": {},
+      "name": null,
+      "type": null,
+      "img": null,
+      "ownership": null
+    }
+  },
+  {
+    "key": "!scenes.tokens.delta!xk0d9gBiaJHvZewJ.fY3aEXZdAHKtARPD.m8XrmQRd0gIEoJYz",
+    "value": {
+      "_id": "m8XrmQRd0gIEoJYz",
+      "system": {},
+      "items": [],
+      "effects": [],
+      "flags": {},
+      "name": null,
+      "type": null,
+      "img": null,
+      "ownership": null
+    }
+  },
+  {
+    "key": "!scenes.tokens.delta!xk0d9gBiaJHvZewJ.qu7UOQhK0D6yfx7F.qu7UOQhK0D6yfx7F",
+    "value": {
+      "_id": "qu7UOQhK0D6yfx7F",
+      "system": {},
+      "flags": {},
+      "name": null,
+      "type": null,
+      "img": null,
+      "items": [],
+      "effects": [],
+      "ownership": null
+    }
+  },
+  {
+    "key": "!scenes.walls!xk0d9gBiaJHvZewJ.0FMeXSJlyzYCElUA",
+    "value": {
+      "light": 20,
+      "sight": 20,
+      "sound": 20,
+      "move": 20,
+      "c": [
+        1750,
+        338,
+        1300,
+        338
+      ],
+      "_id": "0FMeXSJlyzYCElUA",
+      "dir": 0,
+      "door": 0,
+      "ds": 0,
+      "threshold": {
+        "light": null,
+        "sight": null,
+        "sound": null,
+        "attenuation": false
+      },
+      "animation": null,
+      "flags": {}
+    }
+  },
+  {
+    "key": "!scenes.walls!xk0d9gBiaJHvZewJ.F7LcT9KD0wewsQ3H",
+    "value": {
+      "light": 20,
+      "sight": 20,
+      "sound": 20,
+      "move": 20,
+      "c": [
+        1575,
+        750,
+        1775,
+        750
+      ],
+      "_id": "F7LcT9KD0wewsQ3H",
+      "dir": 0,
+      "door": 0,
+      "ds": 0,
+      "threshold": {
+        "light": null,
+        "sight": null,
+        "sound": null,
+        "attenuation": false
+      },
+      "animation": null,
+      "flags": {}
+    }
+  },
+  {
+    "key": "!scenes.walls!xk0d9gBiaJHvZewJ.GUVSBgYALMsATImW",
+    "value": {
+      "light": 20,
+      "sight": 20,
+      "sound": 20,
+      "move": 20,
+      "c": [
+        1300,
+        750,
+        1438,
+        750
+      ],
+      "_id": "GUVSBgYALMsATImW",
+      "dir": 0,
+      "door": 0,
+      "ds": 0,
+      "threshold": {
+        "light": null,
+        "sight": null,
+        "sound": null,
+        "attenuation": false
+      },
+      "animation": null,
+      "flags": {}
+    }
+  },
+  {
+    "key": "!scenes.walls!xk0d9gBiaJHvZewJ.IbJz69iqSjcrsNIn",
+    "value": {
+      "light": 20,
+      "sight": 20,
+      "sound": 20,
+      "move": 20,
+      "c": [
+        425,
+        1100,
+        500,
+        525
+      ],
+      "_id": "IbJz69iqSjcrsNIn",
+      "dir": 0,
+      "door": 0,
+      "ds": 0,
+      "threshold": {
+        "light": null,
+        "sight": null,
+        "sound": null,
+        "attenuation": false
+      },
+      "animation": null,
+      "flags": {}
+    }
+  },
+  {
+    "key": "!scenes.walls!xk0d9gBiaJHvZewJ.UZYB5HD9sE3PiHgD",
+    "value": {
+      "light": 20,
+      "sight": 20,
+      "sound": 20,
+      "move": 20,
+      "c": [
+        813,
+        1288,
+        788,
+        1288
+      ],
+      "_id": "UZYB5HD9sE3PiHgD",
+      "dir": 0,
+      "door": 0,
+      "ds": 0,
+      "threshold": {
+        "light": null,
+        "sight": null,
+        "sound": null,
+        "attenuation": false
+      },
+      "animation": null,
+      "flags": {}
+    }
+  },
+  {
+    "key": "!scenes.walls!xk0d9gBiaJHvZewJ.WcEMJenRvD0qBOaa",
+    "value": {
+      "light": 20,
+      "sight": 20,
+      "sound": 20,
+      "move": 20,
+      "c": [
+        663,
+        1275,
+        488,
+        1225
+      ],
+      "_id": "WcEMJenRvD0qBOaa",
+      "dir": 0,
+      "door": 0,
+      "ds": 0,
+      "threshold": {
+        "light": null,
+        "sight": null,
+        "sound": null,
+        "attenuation": false
+      },
+      "animation": null,
+      "flags": {}
+    }
+  },
+  {
+    "key": "!scenes.walls!xk0d9gBiaJHvZewJ.ZjbeF9CKuwg4yxRX",
+    "value": {
+      "light": 20,
+      "sight": 20,
+      "sound": 20,
+      "move": 20,
+      "c": [
+        725,
+        1288,
+        700,
+        1288
+      ],
+      "_id": "ZjbeF9CKuwg4yxRX",
+      "dir": 0,
+      "door": 0,
+      "ds": 0,
+      "threshold": {
+        "light": null,
+        "sight": null,
+        "sound": null,
+        "attenuation": false
+      },
+      "animation": null,
+      "flags": {}
+    }
+  },
+  {
+    "key": "!scenes.walls!xk0d9gBiaJHvZewJ.cbUH9ORILgMqyylX",
+    "value": {
+      "light": 20,
+      "sight": 20,
+      "sound": 20,
+      "move": 20,
+      "c": [
+        575,
+        438,
+        713,
+        425
+      ],
+      "_id": "cbUH9ORILgMqyylX",
+      "dir": 0,
+      "door": 0,
+      "ds": 0,
+      "threshold": {
+        "light": null,
+        "sight": null,
+        "sound": null,
+        "attenuation": false
+      },
+      "animation": null,
+      "flags": {}
+    }
+  },
+  {
+    "key": "!scenes.walls!xk0d9gBiaJHvZewJ.gRCp9CS7C3JgWjl7",
+    "value": {
+      "light": 20,
+      "sight": 20,
+      "sound": 20,
+      "move": 20,
+      "c": [
+        500,
+        525,
+        575,
+        438
+      ],
+      "_id": "gRCp9CS7C3JgWjl7",
+      "dir": 0,
+      "door": 0,
+      "ds": 0,
+      "threshold": {
+        "light": null,
+        "sight": null,
+        "sound": null,
+        "attenuation": false
+      },
+      "animation": null,
+      "flags": {}
+    }
+  },
+  {
+    "key": "!scenes.walls!xk0d9gBiaJHvZewJ.hOLCIdlYS13nZnBC",
+    "value": {
+      "light": 20,
+      "sight": 20,
+      "sound": 20,
+      "move": 20,
+      "c": [
+        1213,
+        350,
+        1300,
+        338
+      ],
+      "_id": "hOLCIdlYS13nZnBC",
+      "dir": 0,
+      "door": 0,
+      "ds": 0,
+      "threshold": {
+        "light": null,
+        "sight": null,
+        "sound": null,
+        "attenuation": false
+      },
+      "animation": null,
+      "flags": {}
+    }
+  },
+  {
+    "key": "!scenes.walls!xk0d9gBiaJHvZewJ.jgNE6DitpsDj3Lfn",
+    "value": {
+      "light": 20,
+      "sight": 20,
+      "sound": 20,
+      "move": 20,
+      "c": [
+        950,
+        363,
+        1025,
+        363
+      ],
+      "_id": "jgNE6DitpsDj3Lfn",
+      "dir": 0,
+      "door": 0,
+      "ds": 0,
+      "threshold": {
+        "light": null,
+        "sight": null,
+        "sound": null,
+        "attenuation": false
+      },
+      "animation": null,
+      "flags": {}
+    }
+  },
+  {
+    "key": "!scenes.walls!xk0d9gBiaJHvZewJ.mBkxjkxC4GQbgL7F",
+    "value": {
+      "light": 20,
+      "sight": 20,
+      "sound": 20,
+      "move": 20,
+      "c": [
+        1438,
+        750,
+        1575,
+        750
+      ],
+      "_id": "mBkxjkxC4GQbgL7F",
+      "dir": 0,
+      "door": 1,
+      "ds": 0,
+      "threshold": {
+        "light": null,
+        "sight": null,
+        "sound": null,
+        "attenuation": false
+      },
+      "animation": {
+        "type": "",
+        "texture": null,
+        "flip": false,
+        "double": false,
+        "direction": 1,
+        "duration": 750,
+        "strength": 1
+      },
+      "flags": {
+        "wall-height": {
+          "top": null,
+          "bottom": null
+        }
+      },
+      "doorSound": ""
+    }
+  },
+  {
+    "key": "!scenes.walls!xk0d9gBiaJHvZewJ.mNh5WSaaU5aPItoG",
+    "value": {
+      "light": 20,
+      "sight": 20,
+      "sound": 20,
+      "move": 20,
+      "c": [
+        1775,
+        750,
+        1750,
+        338
+      ],
+      "_id": "mNh5WSaaU5aPItoG",
+      "dir": 0,
+      "door": 0,
+      "ds": 0,
+      "threshold": {
+        "light": null,
+        "sight": null,
+        "sound": null,
+        "attenuation": false
+      },
+      "animation": null,
+      "flags": {}
+    }
+  },
+  {
+    "key": "!scenes.walls!xk0d9gBiaJHvZewJ.nMAcSlezroJkn6Ee",
+    "value": {
+      "light": 20,
+      "sight": 20,
+      "sound": 20,
+      "move": 20,
+      "c": [
+        788,
+        1288,
+        763,
+        1288
+      ],
+      "_id": "nMAcSlezroJkn6Ee",
+      "dir": 0,
+      "door": 0,
+      "ds": 0,
+      "threshold": {
+        "light": null,
+        "sight": null,
+        "sound": null,
+        "attenuation": false
+      },
+      "animation": null,
+      "flags": {}
+    }
+  },
+  {
+    "key": "!scenes.walls!xk0d9gBiaJHvZewJ.qovazadftobXlIo9",
+    "value": {
+      "light": 20,
+      "sight": 20,
+      "sound": 20,
+      "move": 20,
+      "c": [
+        488,
+        1225,
+        425,
+        1100
+      ],
+      "_id": "qovazadftobXlIo9",
+      "dir": 0,
+      "door": 0,
+      "ds": 0,
+      "threshold": {
+        "light": null,
+        "sight": null,
+        "sound": null,
+        "attenuation": false
+      },
+      "animation": null,
+      "flags": {}
+    }
+  },
+  {
+    "key": "!scenes.walls!xk0d9gBiaJHvZewJ.tFlkS6BKbrIwgXap",
+    "value": {
+      "light": 20,
+      "sight": 20,
+      "sound": 20,
+      "move": 20,
+      "c": [
+        700,
+        1288,
+        663,
+        1275
+      ],
+      "_id": "tFlkS6BKbrIwgXap",
+      "dir": 0,
+      "door": 0,
+      "ds": 0,
+      "threshold": {
+        "light": null,
+        "sight": null,
+        "sound": null,
+        "attenuation": false
+      },
+      "animation": null,
+      "flags": {}
+    }
+  },
+  {
+    "key": "!scenes.walls!xk0d9gBiaJHvZewJ.uMe2gK8ZjjVzHEre",
+    "value": {
+      "light": 20,
+      "sight": 20,
+      "sound": 20,
+      "move": 20,
+      "c": [
+        1025,
+        363,
+        1213,
+        350
+      ],
+      "_id": "uMe2gK8ZjjVzHEre",
+      "dir": 0,
+      "door": 0,
+      "ds": 0,
+      "threshold": {
+        "light": null,
+        "sight": null,
+        "sound": null,
+        "attenuation": false
+      },
+      "animation": null,
+      "flags": {}
+    }
+  },
+  {
+    "key": "!scenes.walls!xk0d9gBiaJHvZewJ.w9mFDKEH7PB6WWtJ",
+    "value": {
+      "light": 20,
+      "sight": 20,
+      "sound": 20,
+      "move": 20,
+      "c": [
+        738,
+        1288,
+        725,
+        1288
+      ],
+      "_id": "w9mFDKEH7PB6WWtJ",
+      "dir": 0,
+      "door": 0,
+      "ds": 0,
+      "threshold": {
+        "light": null,
+        "sight": null,
+        "sound": null,
+        "attenuation": false
+      },
+      "animation": null,
+      "flags": {}
+    }
+  },
+  {
+    "key": "!scenes.walls!xk0d9gBiaJHvZewJ.whpR1XVblWOZthgb",
+    "value": {
+      "light": 20,
+      "sight": 20,
+      "sound": 20,
+      "move": 20,
+      "c": [
+        1825,
+        1275,
+        900,
+        1288
+      ],
+      "_id": "whpR1XVblWOZthgb",
+      "dir": 0,
+      "door": 0,
+      "ds": 0,
+      "threshold": {
+        "light": null,
+        "sight": null,
+        "sound": null,
+        "attenuation": false
+      },
+      "animation": null,
+      "flags": {}
+    }
+  },
+  {
+    "key": "!scenes.walls!xk0d9gBiaJHvZewJ.ylJYupgEkF0XG1xV",
+    "value": {
+      "light": 20,
+      "sight": 20,
+      "sound": 20,
+      "move": 20,
+      "c": [
+        1300,
+        338,
+        1300,
+        750
+      ],
+      "_id": "ylJYupgEkF0XG1xV",
+      "dir": 0,
+      "door": 0,
+      "ds": 0,
+      "threshold": {
+        "light": null,
+        "sight": null,
+        "sound": null,
+        "attenuation": false
+      },
+      "animation": null,
+      "flags": {}
+    }
+  }
+]

@@ -1,0 +1,11 @@
+{
+  "name": "ashes-of-velsar",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "extract": "node tools/extract-world-source.mjs",
+    "build": "node tools/build-module.mjs",
+    "test": "node tools/validate-module.mjs"
+  }
+}

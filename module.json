@@ -1,0 +1,118 @@
+{
+  "id": "ashes-of-velsar",
+  "title": "Ashes of Velsar",
+  "description": "A complete SW5E campaign module for four to six characters of 1st through 4th level, including journals, handouts, scenes, campaign actors, and a one-click Adventure compendium.",
+  "version": "0.1.0",
+  "compatibility": {
+    "minimum": "13",
+    "verified": "13"
+  },
+  "authors": [
+    {
+      "name": "Ashes of Velsar Campaign Team"
+    }
+  ],
+  "relationships": {
+    "systems": [
+      {
+        "id": "dnd5e",
+        "type": "system",
+        "compatibility": {
+          "minimum": "5.2.5",
+          "verified": "5.2.5"
+        }
+      }
+    ],
+    "requires": [
+      {
+        "id": "sw5e-module",
+        "type": "module",
+        "compatibility": {
+          "minimum": "1.3.9",
+          "verified": "1.3.9"
+        }
+      }
+    ]
+  },
+  "esmodules": [
+    "scripts/module.mjs"
+  ],
+  "styles": [
+    "styles/ashes-of-velsar.css"
+  ],
+  "packs": [
+    {
+      "name": "journals",
+      "label": "Ashes of Velsar — Journals",
+      "path": "packs/journals",
+      "type": "JournalEntry",
+      "system": "dnd5e",
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
+      }
+    },
+    {
+      "name": "scenes",
+      "label": "Ashes of Velsar — Scenes",
+      "path": "packs/scenes",
+      "type": "Scene",
+      "system": "dnd5e",
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
+      }
+    },
+    {
+      "name": "campaign",
+      "label": "Ashes of Velsar — Campaign",
+      "path": "packs/campaign",
+      "type": "Actor",
+      "system": "dnd5e",
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
+      },
+      "flags": {
+        "dnd5e": {
+          "types": [
+            "npc",
+            "vehicle"
+          ]
+        }
+      }
+    },
+    {
+      "name": "adventure",
+      "label": "Ashes of Velsar — Complete Adventure",
+      "path": "packs/adventure",
+      "type": "Adventure",
+      "system": "dnd5e",
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
+      }
+    }
+  ],
+  "packFolders": [
+    {
+      "name": "Ashes of Velsar",
+      "sorting": "m",
+      "color": "#9e2b25",
+      "packs": [
+        "adventure",
+        "journals",
+        "scenes",
+        "campaign"
+      ],
+      "folders": []
+    }
+  ],
+  "media": [
+    {
+      "type": "cover",
+      "url": "modules/ashes-of-velsar/assets/handouts/arrival-at-brackens-point.png"
+    }
+  ],
+  "flags": {}
+}

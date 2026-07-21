@@ -1,0 +1,21 @@
+.ashes-of-velsar-journal .journal-entry-content {
+  --aov-accent: #9e2b25;
+  --aov-gold: #d2aa55;
+}
+
+.ashes-of-velsar-journal .journal-entry-content h1,
+.ashes-of-velsar-journal .journal-entry-content h2 {
+  border-color: var(--aov-accent);
+}
+
+.ashes-of-velsar-journal .journal-entry-content h1 {
+  color: var(--aov-gold);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.ashes-of-velsar-journal .journal-entry-content blockquote {
+  border-left: 4px solid var(--aov-accent);
+  background: color-mix(in srgb, var(--aov-accent) 10%, transparent);
+  padding: 0.5rem 0.8rem;
+}
