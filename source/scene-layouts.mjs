@@ -1,5 +1,6 @@
-// Hand-traced against the official Player Maps in GM and Player Maps.zip.
-// Coordinates use each image's native, zero-padding Scene coordinate space.
+// Token staging data for the current DungeonDraft-style maps.
+// Legacy traced geometry remains only as reference; the build intentionally
+// emits no Scene wall documents so the GM can configure walls manually.
 
 const ACTORS = {
   bruiser: "20iCLIcHVHWZqvBg",
@@ -391,6 +392,24 @@ export const sceneLayouts = {
       token(ACTORS.davik, 505, 845, { disposition: 1 }), token(ACTORS.tovan, 420, 760, { disposition: 1, hidden: true }),
       token(ACTORS.keelo, 320, 690, { disposition: 1, hidden: true }), token(ACTORS.pavo, 1110, 690, { disposition: 1, hidden: true }),
       token(ACTORS.sella, 1190, 735, { disposition: 1, hidden: true }), token(ACTORS.doctorVey, 250, 850, { disposition: 1, hidden: true })
+    ]
+  },
+
+  "16-doctor-veys-clinic.png": {
+    tokens: [
+      token(ACTORS.doctorVey, 276, 250, { disposition: 0 }),
+      token(ACTORS.fighter, 1192, 620, { hidden: true }),
+      token(ACTORS.fighter, 1266, 739, { hidden: true }),
+      token(ACTORS.investigator, 706, 445, { hidden: true }),
+      token(ACTORS.trooper, 769, 445, { hidden: true }),
+      token(ACTORS.trooper, 641, 445, { hidden: true })
+    ]
+  },
+
+  "17-desert-shrine.png": {
+    tokens: [
+      token(ACTORS.orra, 685, 862, { disposition: 1 }),
+      token(ACTORS.tovan, 960, 254, { hidden: true, disposition: 0 })
     ]
   }
 };

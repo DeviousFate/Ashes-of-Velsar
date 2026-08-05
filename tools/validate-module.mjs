@@ -16,7 +16,7 @@ const { ClassicLevel } = require("classic-level");
 
 const expectedRoots = {
   journals: { expression: /^!journal![^!]+$/, count: 5 },
-  scenes: { expression: /^!scenes![^!]+$/, count: 15 },
+  scenes: { expression: /^!scenes![^!]+$/, count: 17 },
   campaign: { expression: /^!actors![^!]+$/, count: 20 },
   adventure: { expression: /^!adventures![^!]+$/, count: 1 }
 };
@@ -105,6 +105,15 @@ for (const { key, value } of packData.journals.filter(({ key }) => /^!journal![^
     if (!journalMap.has(`!journal.pages!${value._id}.${pageId}`)) failures.push(`${key} references missing page ${pageId}`);
   }
 }
+const mapJournal = journalMap.get("!journal!AoVBlueprints001");
+if (mapJournal?.pages?.length !== 17) failures.push("GM Map Journal does not contain all 17 map pages");
+for (const pageId of mapJournal?.pages ?? []) {
+  const page = journalMap.get(`!journal.pages!AoVBlueprints001.${pageId}`);
+  if (page?.type !== "text") failures.push(`GM Map Journal page ${pageId} is not a text page`);
+  if (!page?.text?.content?.includes("Compendium.ashes-of-velsar.campaign.Actor.")) {
+    failures.push(`GM Map Journal page ${pageId} has no campaign actor links`);
+  }
+}
 
 const sceneMap = recordMap(packData.scenes);
 for (const { key, value } of packData.scenes.filter(({ key }) => /^!scenes![^!]+$/.test(key))) {
@@ -117,7 +126,7 @@ for (const { key, value } of packData.scenes.filter(({ key }) => /^!scenes![^!]+
     }
   }
 
-  if (!(value.walls?.length > 0)) failures.push(`${key} has no traced walls`);
+  if ((value.walls?.length ?? 0) !== 0) failures.push(`${key} should have no generated walls`);
   if (!(value.tokens?.length > 0)) failures.push(`${key} has no staged tokens`);
   for (const wallId of value.walls ?? []) {
     const wall = sceneMap.get(`!scenes.walls!${value._id}.${wallId}`);
@@ -163,8 +172,9 @@ for (const { key, value } of packData.scenes.filter(({ key }) => /^!scenes![^!]+
       }
     }
   }
-  console.log(`  ${value.name}: ${value.walls?.length ?? 0} walls, ${doors} doors, ${value.tokens?.length ?? 0} tokens`);
+  console.log(`  ${value.name}: ${value.walls?.length ?? 0} walls, ${value.tokens?.length ?? 0} tokens`);
 }
+if (packData.scenes.some(({ key }) => /^!scenes\.walls!/.test(key))) failures.push("Scenes pack contains embedded wall documents");
 
 const actorMap = recordMap(packData.campaign);
 const actorRootIds = new Set(packData.campaign
@@ -183,24 +193,25 @@ const adventure = packData.adventure.find(({ key }) => /^!adventures![^!]+$/.tes
 if (adventure) {
   if (adventure.actors?.length !== 20) failures.push("Adventure does not embed all 20 campaign actors");
   if (adventure.journal?.length !== 5) failures.push("Adventure does not embed all 5 journals");
-  if (adventure.scenes?.length !== 15) failures.push("Adventure does not embed all 15 scenes");
+  if (adventure.scenes?.length !== 17) failures.push("Adventure does not embed all 17 scenes");
   if (!adventure.scenes?.every((scene) => scene.notes?.length === 1)) failures.push("Adventure scenes did not embed their journal pins");
-  if (!adventure.scenes?.every((scene) => scene.walls?.length > 0)) failures.push("Adventure scenes did not embed traced walls");
+  if (!adventure.scenes?.every((scene) => (scene.walls?.length ?? 0) === 0)) failures.push("Adventure contains generated Scene walls");
   if (!adventure.scenes?.every((scene) => scene.tokens?.every((token) => token.delta && typeof token.delta === "object"))) {
     failures.push("Adventure scene tokens did not embed their ActorDelta documents");
   }
 }
 
 const requiredAssets = [
-  ...Array.from({ length: 15 }, (_, index) => {
+  ...Array.from({ length: 17 }, (_, index) => {
     const slugs = [
       "01-brackens-point-landing-yard.png", "02-bent-spanner-cantina.png", "03-compressor-station-scrapyard.png",
       "04-ressiks-rustclaw-hideout.png", "05-southern-cut-checkpoint.png", "06-daviks-reclamation-yard.png",
       "07-hidden-stargazer-hangar.png", "08-crashed-transport-site.png", "09-broken-beacon-site.png",
       "10-tovan-rells-hidden-refuge.png", "11-prisoner-transfer-ambush.png", "12-administration-square.png",
-      "13-workers-blocks.png", "14-market-row-during-purge.png", "15-stargazer-hangar-finale-damaged.png"
+      "13-workers-blocks.png", "14-market-row-during-purge.png", "15-stargazer-hangar-finale-damaged.png",
+      "16-doctor-veys-clinic.png", "17-desert-shrine.png"
     ];
-    return `assets/maps/official/${slugs[index]}`;
+    return `assets/maps/dungeondraft/${slugs[index]}`;
   }),
   ...[
     "01_brackens_point_landing_yard_blueprint.png", "02_bent_spanner_cantina_blueprint.png",

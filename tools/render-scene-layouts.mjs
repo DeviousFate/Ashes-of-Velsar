@@ -67,13 +67,10 @@ function resolvedLayout(layout) {
 
 await mkdir(OUTPUT, { recursive: true });
 for (const [slug, layout] of Object.entries(sceneLayouts)) {
-  const background = await readFile(path.join(ROOT, "assets", "maps", "official", slug));
+  const background = await readFile(path.join(ROOT, "assets", "maps", "dungeondraft", slug));
   const width = background.readUInt32BE(16);
   const height = background.readUInt32BE(20);
-  const previewLayout = resolvedLayout(layout);
-  const geometry = Object.entries(colors)
-    .map(([kind, color]) => lines(previewLayout[kind], color, kind === "secretDoors"))
-    .join("\n");
+  const geometry = "";
   const tokens = (layout.tokens ?? []).map((token, index) => {
     const cx = token.x + 36;
     const cy = token.y + 36;
