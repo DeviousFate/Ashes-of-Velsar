@@ -5,6 +5,7 @@ import { copyFile, mkdir, readFile, readdir, rm } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import process from "node:process";
+import { actorArtworkDefinitions, generatedActorDefinitions } from "../source/generated-actors.mjs";
 import { officialEncounterActorIds, sceneLayouts } from "../source/scene-layouts.mjs";
 
 const MODULE_ID = "ashes-of-velsar";
@@ -136,7 +137,11 @@ const actorIds = new Set([
   "zdPrGvzoFH9rq1Ie"
 ]);
 const imperialActorIds = new Set(["IVG8XsGcbY3JtVHz", "l3JFZ0aZahnlv5OX", "g9reSEqGK1ID9YYT", "ym5vG10BPlnJvqxq"]);
-const packagedActorIds = new Set([...actorIds, ...officialEncounterActorIds]);
+const generatedActorIds = new Set(generatedActorDefinitions.map(({ id }) => id));
+const packagedActorIds = new Set([...actorIds, ...officialEncounterActorIds, ...generatedActorIds]);
+const actorArtworkById = new Map(actorArtworkDefinitions.map((definition) => [definition.actorId, definition]));
+if (generatedActorIds.size !== generatedActorDefinitions.length) throw new Error("Generated Actor IDs must be unique.");
+if (actorArtworkById.size !== actorArtworkDefinitions.length) throw new Error("Actor artwork mappings must be unique.");
 
 const now = Date.now();
 const deepClone = (value) => structuredClone(value);
@@ -154,6 +159,59 @@ function stats(source = null) {
     modifiedTime: now,
     lastModifiedBy: null
   };
+}
+
+function buildGeneratedActorRecords(sourceActors) {
+  const records = [];
+  for (const definition of generatedActorDefinitions) {
+    const templateRecords = sourceActors.filter(({ key }) =>
+      key === `!actors!${definition.templateId}`
+      || key.startsWith(`!actors.items!${definition.templateId}.`)
+      || key.startsWith(`!actors.items.effects!${definition.templateId}.`)
+      || key.startsWith(`!actors.effects!${definition.templateId}.`));
+    if (!templateRecords.some(({ key }) => key === `!actors!${definition.templateId}`)) {
+      throw new Error(`Missing template Actor ${definition.templateId} for ${definition.name}`);
+    }
+
+    for (const templateRecord of templateRecords) {
+      const record = {
+        key: templateRecord.key.replace(definition.templateId, definition.id),
+        value: deepClone(templateRecord.value)
+      };
+      const isRoot = templateRecord.key === `!actors!${definition.templateId}`;
+      if (isRoot) {
+        const actor = record.value;
+        actor._id = definition.id;
+        actor.name = definition.name;
+        actor.folder = null;
+        actor.img = "";
+        actor.prototypeToken = deepClone(actor.prototypeToken ?? {});
+        actor.prototypeToken.name = definition.name;
+        actor.prototypeToken.texture = { ...(actor.prototypeToken.texture ?? {}), src: "" };
+        if (definition.cr !== undefined) actor.system.details.cr = definition.cr;
+        if (definition.hp) actor.system.attributes.hp = { ...actor.system.attributes.hp, ...definition.hp };
+        if (definition.ac !== undefined) actor.system.attributes.ac = { calc: "flat", flat: definition.ac };
+        for (const [ability, value] of Object.entries(definition.abilities ?? {})) {
+          if (actor.system.abilities?.[ability]) actor.system.abilities[ability].value = value;
+        }
+        actor.system.details.biography = { value: definition.biography, public: "" };
+        actor.flags = {
+          ...actor.flags,
+          [MODULE_ID]: {
+            generatedActor: true,
+            placeholder: Boolean(definition.placeholder),
+            sourceUnknownChar: !definition.placeholder
+          }
+        };
+        actor._stats = stats();
+      } else {
+        if (definition.itemRenames?.[record.value.name]) record.value.name = definition.itemRenames[record.value.name];
+        if (record.value?._stats) record.value._stats = stats(record.value._stats.compendiumSource ?? null);
+      }
+      records.push(record);
+    }
+  }
+  return records;
 }
 
 function folderDocument(id, name, type, sort, color) {
@@ -402,6 +460,16 @@ function localizeTokenTexture(src) {
   return `${MODULE_PATH}/assets/actors/${path.basename(original)}`;
 }
 
+function packagedActorTexture(actor, token = false) {
+  if (actor._id === "0ml1uw24lJevFdH1") return `${MODULE_PATH}/assets/maps/bt-9-stargazer-diagram.png`;
+  const artwork = actorArtworkById.get(actor._id);
+  if (artwork) {
+    const targetFile = token && artwork.tokenTargetFile ? artwork.tokenTargetFile : artwork.targetFile;
+    return `${MODULE_PATH}/assets/actors/${targetFile}`;
+  }
+  return localizeTokenTexture(token ? actor.prototypeToken?.texture?.src : actor.img);
+}
+
 function makeSceneToken(actor, placement, sceneIndex, tokenIndex) {
   if (!actor) throw new Error(`Missing actor ${placement.actorId} required by scene layout ${sceneIndex + 1}`);
   const tokenId = embeddedId("AoVTok", sceneIndex, tokenIndex);
@@ -428,7 +496,7 @@ function makeSceneToken(actor, placement, sceneIndex, tokenIndex) {
       [MODULE_ID]: { generated: true, staged: true }
     }
   };
-  value.texture = { ...(value.texture ?? {}), src: localizeTokenTexture(value.texture?.src) };
+  value.texture = { ...(value.texture ?? {}), src: packagedActorTexture(actor, true) };
   delete value.randomImg;
   delete value.appendNumber;
   delete value.prependAdjective;
@@ -477,7 +545,7 @@ function npcDirectoryHtml(actorRoots) {
     .sort((a, b) => a.value.name.localeCompare(b.value.name))
     .map(({ value }) => `<li>@UUID[${compendiumUuid("campaign", "Actor", value._id)}]{${value.name}}</li>`)
     .join("\n");
-  return `<h1>Campaign Actors</h1><p>Velsar-specific NPCs, the BT-9 Stargazer, and the Trooper, Scout Trooper, and Viper Probe Droid used by the staged encounters are stored here.</p><ul>${items}</ul>`;
+  return `<h1>Campaign Actors</h1><p>Illustrated Velsar NPCs, the BT-9 Stargazer, and the Trooper, Scout Trooper, and Viper Probe Droid used by the staged encounters are stored here. Image-only characters without supplied descriptions are clearly marked as placeholders.</p><ul>${items}</ul>`;
 }
 
 function embedActor(root, recordMap) {
@@ -527,9 +595,21 @@ const [sourceActors, sourceJournals, sourceScenes, sw5eMonsterRecords] = await P
 const officialEncounterRecords = sw5eMonsterRecords
   .filter(({ key }) => [...officialEncounterActorIds].some((actorId) => key.includes(actorId)))
   .map(({ key, value }) => ({ key, value: deepClone(value) }));
-const tokenActorRoots = new Map([...sourceActors, ...officialEncounterRecords]
+const generatedActorRecords = buildGeneratedActorRecords(sourceActors);
+const tokenActorRoots = new Map([...sourceActors, ...officialEncounterRecords, ...generatedActorRecords]
   .filter(({ key }) => /^!actors![^!]+$/.test(key))
   .map(({ value }) => [value._id, value]));
+
+const actorPicturePath = path.join(worldImagePath, "Actor Pictures");
+const packagedActorAssetPath = path.join(ROOT, "assets", "actors");
+await rm(packagedActorAssetPath, { recursive: true, force: true });
+await mkdir(packagedActorAssetPath, { recursive: true });
+for (const artwork of actorArtworkDefinitions) {
+  await copyAsset(path.join(actorPicturePath, artwork.sourceFile), path.join("assets", "actors", artwork.targetFile));
+  if (artwork.tokenSourceFile) {
+    await copyAsset(path.join(actorPicturePath, artwork.tokenSourceFile), path.join("assets", "actors", artwork.tokenTargetFile));
+  }
+}
 
 await copyAsset(path.join(worldImagePath, "Maps", "Diagram.png"), path.join("assets", "maps", "bt-9-stargazer-diagram.png"));
 
@@ -570,7 +650,7 @@ for (const [index, handout] of handoutDefinitions.entries()) {
 }
 
 const actorRootPreview = sourceActors
-  .concat(officialEncounterRecords)
+  .concat(officialEncounterRecords, generatedActorRecords)
   .filter(({ key }) => /^!actors![^!]+$/.test(key))
   .map(({ key, value }) => ({ key, value: deepClone(value) }));
 const dashboardPageRecords = [
@@ -675,7 +755,7 @@ for (const [key, name, sort, color] of [
   sceneRecords.push({ key: `!folders!${sceneFolderIds[key]}`, value: folderDocument(sceneFolderIds[key], name, "Scene", sort, color) });
 }
 
-const actorRecords = [...sourceActors, ...officialEncounterRecords]
+const actorRecords = [...sourceActors, ...officialEncounterRecords, ...generatedActorRecords]
   .map(({ key, value }) => ({ key, value: deepClone(value) }));
 for (const record of actorRecords) {
   const rootMatch = /^!actors!([^!]+)$/.exec(record.key);
@@ -694,30 +774,19 @@ for (const record of actorRecords) {
     ...actor.flags,
     [MODULE_ID]: {
       campaignActor: true,
-      officialSw5eActor: officialEncounterActorIds.has(actor._id)
+      officialSw5eActor: officialEncounterActorIds.has(actor._id),
+      generatedActor: generatedActorIds.has(actor._id),
+      placeholder: Boolean(actor.flags?.[MODULE_ID]?.placeholder),
+      sourceUnknownChar: Boolean(actor.flags?.[MODULE_ID]?.sourceUnknownChar)
     }
   };
   actor._stats = stats(actor._stats?.compendiumSource ?? null);
 
-  if (actor._id === "0ml1uw24lJevFdH1") {
-    actor.img = `${MODULE_PATH}/assets/maps/bt-9-stargazer-diagram.png`;
-    if (actor.prototypeToken?.texture) actor.prototypeToken.texture.src = actor.img;
-    continue;
-  }
-
   if (officialEncounterActorIds.has(actor._id)) continue;
-
-  for (const target of [
-    { holder: actor, field: "img" },
-    { holder: actor.prototypeToken?.texture, field: "src" }
-  ]) {
-    if (!target.holder?.[target.field]) continue;
-    const original = target.holder[target.field].split("?")[0];
-    const baseName = path.basename(original);
-    const destination = path.join("assets", "actors", baseName);
-    await copyAsset(path.join(foundryDataPath, ...original.split("/")), destination);
-    target.holder[target.field] = `${MODULE_PATH}/${destination.replaceAll("\\", "/")}`;
-  }
+  const artwork = actorArtworkById.get(actor._id);
+  if (actor._id !== "0ml1uw24lJevFdH1" && !artwork) throw new Error(`Missing artwork mapping for ${actor.name}`);
+  actor.img = packagedActorTexture(actor);
+  if (actor.prototypeToken?.texture) actor.prototypeToken.texture.src = packagedActorTexture(actor, true);
 }
 
 actorRecords.push(
@@ -746,7 +815,7 @@ const adventure = {
   img: `${MODULE_PATH}/assets/landing-page.png`,
   caption: "Ashes of Velsar",
   sort: 0,
-  description: "<p><strong>A complete SW5E adventure for four to six characters of 1st–4th level.</strong></p><p>Import this Adventure to create the campaign journals, player handouts, eighteen illustrated Scenes, campaign actors, folders, and linked Scene journal pins. Scene 18 is an optional Bracken’s Point town map for random encounters. Scene walls are intentionally empty for the GM to configure manually.</p>",
+  description: "<p><strong>A complete SW5E adventure for four to six characters of 1st–4th level.</strong></p><p>Import this Adventure to create the campaign journals, player handouts, eighteen illustrated Scenes, thirty-three campaign actors, folders, and linked Scene journal pins. Scene 18 is an optional Bracken’s Point town map for random encounters. Scene walls are intentionally empty for the GM to configure manually.</p>",
   actors: actorRoots,
   combats: [],
   items: [],

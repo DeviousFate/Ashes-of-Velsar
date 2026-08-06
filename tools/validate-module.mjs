@@ -5,6 +5,7 @@ import { access, cp, mkdir, readFile, readdir, rm } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import process from "node:process";
+import { actorArtworkDefinitions, generatedActorDefinitions } from "../source/generated-actors.mjs";
 
 const ROOT = process.cwd();
 const localAppData = process.env.LOCALAPPDATA;
@@ -17,7 +18,7 @@ const { ClassicLevel } = require("classic-level");
 const expectedRoots = {
   journals: { expression: /^!journal![^!]+$/, count: 4 },
   scenes: { expression: /^!scenes![^!]+$/, count: 18 },
-  campaign: { expression: /^!actors![^!]+$/, count: 20 },
+  campaign: { expression: /^!actors![^!]+$/, count: 33 },
   adventure: { expression: /^!adventures![^!]+$/, count: 1 }
 };
 
@@ -213,13 +214,50 @@ for (const { key, value } of packData.campaign.filter(({ key }) => /^!actors![^!
     if (!actorMap.has(`!actors.items!${value._id}.${itemId}`)) failures.push(`${key} references missing item ${itemId}`);
   }
 }
+for (const definition of generatedActorDefinitions) {
+  const actor = actorMap.get(`!actors!${definition.id}`);
+  if (!actor) {
+    failures.push(`Missing generated Actor ${definition.name}`);
+    continue;
+  }
+  const flags = actor.flags?.["ashes-of-velsar"];
+  if (!flags?.generatedActor) failures.push(`${definition.name} lacks its generated-Actor flag`);
+  if (Boolean(flags?.placeholder) !== Boolean(definition.placeholder)) failures.push(`${definition.name} has the wrong placeholder status`);
+  if (Boolean(flags?.sourceUnknownChar) !== !definition.placeholder) failures.push(`${definition.name} has the wrong UnknownChar source status`);
+  if (actor.system?.details?.biography?.value !== definition.biography) failures.push(`${definition.name} has the wrong generated biography`);
+  if (definition.cr !== undefined && actor.system?.details?.cr !== definition.cr) failures.push(`${definition.name} has the wrong challenge rating`);
+  if (definition.hp && (actor.system?.attributes?.hp?.value !== definition.hp.value || actor.system?.attributes?.hp?.max !== definition.hp.max)) {
+    failures.push(`${definition.name} has the wrong generated hit points`);
+  }
+  if (definition.ac !== undefined && actor.system?.attributes?.ac?.flat !== definition.ac) failures.push(`${definition.name} has the wrong generated armor class`);
+}
+for (const excludedName of ["Sprock", "Dug Durich", "Kaelis Veyn", "ND6R"]) {
+  if (packData.campaign.some(({ key, value }) => /^!actors![^!]+$/.test(key) && value.name === excludedName)) {
+    failures.push(`Excluded Actor ${excludedName} is still packaged`);
+  }
+}
+for (const artwork of actorArtworkDefinitions) {
+  const actor = actorMap.get(`!actors!${artwork.actorId}`);
+  if (!actor) {
+    failures.push(`Artwork mapping references missing Actor ${artwork.actorId}`);
+    continue;
+  }
+  const expectedPortrait = `modules/ashes-of-velsar/assets/actors/${artwork.targetFile}`;
+  const expectedToken = `modules/ashes-of-velsar/assets/actors/${artwork.tokenTargetFile ?? artwork.targetFile}`;
+  if (actor.img !== expectedPortrait) failures.push(`${actor.name} does not use its supplied portrait`);
+  if (actor.prototypeToken?.texture?.src !== expectedToken) failures.push(`${actor.name} does not use its supplied token artwork`);
+}
 for (const { key, value } of packData.scenes.filter(({ key }) => /^!scenes.tokens![^!]+$/.test(key))) {
   if (!actorRootIds.has(value.actorId)) failures.push(`${key} references missing campaign actor ${value.actorId}`);
+  const actor = actorMap.get(`!actors!${value.actorId}`);
+  if (actor && value.texture?.src !== actor.prototypeToken?.texture?.src) {
+    failures.push(`${key} does not use the packaged token artwork for ${actor.name}`);
+  }
 }
 
 const adventure = packData.adventure.find(({ key }) => /^!adventures![^!]+$/.test(key))?.value;
 if (adventure) {
-  if (adventure.actors?.length !== 20) failures.push("Adventure does not embed all 20 campaign actors");
+  if (adventure.actors?.length !== 33) failures.push("Adventure does not embed all 33 campaign actors");
   if (adventure.journal?.length !== 4) failures.push("Adventure does not embed all 4 journals");
   if (adventure.scenes?.length !== 18) failures.push("Adventure does not embed all 18 scenes");
   const embeddedHandouts = adventure.journal?.find((journal) => journal._id === "5PyjVzBeImPu8J7N");
@@ -253,6 +291,8 @@ const handoutSlugs = [
   "19-imperial-curfew-withdrawal-order.png",
   "20-brackens-point-emergency-broadcast.png"
 ];
+const actorAssetSlugs = actorArtworkDefinitions.flatMap(({ targetFile, tokenTargetFile }) =>
+  tokenTargetFile ? [targetFile, tokenTargetFile] : [targetFile]);
 
 const requiredAssets = [
   ...Array.from({ length: 18 }, (_, index) => {
@@ -267,12 +307,9 @@ const requiredAssets = [
     return `assets/maps/dungeondraft/${slugs[index]}`;
   }),
   ...handoutSlugs.map((slug) => `assets/handouts/${slug}`),
+  ...actorAssetSlugs.map((slug) => `assets/actors/${slug}`),
   "assets/landing-page.png",
-  "assets/maps/bt-9-stargazer-diagram.png",
-  "assets/actors/commander_voss.Avatar.webp",
-  "assets/actors/commander_voss.Token.webp",
-  "assets/actors/tovan_rell.Avatar.webp",
-  "assets/actors/tovan_rell.Token.webp"
+  "assets/maps/bt-9-stargazer-diagram.png"
 ];
 for (const relativePath of requiredAssets) {
   try {
@@ -295,6 +332,10 @@ for (const relativePath of requiredAssets) {
 const packagedHandouts = (await readdir(path.join(ROOT, "assets", "handouts"))).sort();
 if (JSON.stringify(packagedHandouts) !== JSON.stringify([...handoutSlugs].sort())) {
   failures.push("assets/handouts does not contain exactly the 20 replacement handout images");
+}
+const packagedActorAssets = (await readdir(path.join(ROOT, "assets", "actors"))).sort();
+if (JSON.stringify(packagedActorAssets) !== JSON.stringify([...actorAssetSlugs].sort())) {
+  failures.push("assets/actors does not contain exactly the supplied artwork for packaged campaign Actors");
 }
 
 for (const obsoletePath of [
