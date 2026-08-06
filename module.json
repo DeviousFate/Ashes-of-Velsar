@@ -2,10 +2,10 @@
   "id": "ashes-of-velsar",
   "title": "Ashes of Velsar",
   "description": "A complete SW5E campaign module for four to six characters of 1st through 4th level, including journals, handouts, scenes, campaign actors, and a one-click Adventure compendium.",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "url": "https://github.com/DeviousFate/Ashes-of-Velsar",
   "manifest": "https://raw.githubusercontent.com/DeviousFate/Ashes-of-Velsar/main/module.json",
-  "download": "https://github.com/DeviousFate/Ashes-of-Velsar/releases/download/v0.4.0/ashes-of-velsar.zip",
+  "download": "https://github.com/DeviousFate/Ashes-of-Velsar/releases/download/v0.5.0/ashes-of-velsar.zip",
   "readme": "https://github.com/DeviousFate/Ashes-of-Velsar/blob/main/README.md",
   "bugs": "https://github.com/DeviousFate/Ashes-of-Velsar/issues",
   "compatibility": {

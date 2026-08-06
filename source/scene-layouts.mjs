@@ -411,5 +411,9 @@ export const sceneLayouts = {
       token(ACTORS.orra, 685, 862, { disposition: 1 }),
       token(ACTORS.tovan, 960, 254, { hidden: true, disposition: 0 })
     ]
+  },
+
+  "18-brackens-point-town-encounter.png": {
+    tokens: []
   }
 };

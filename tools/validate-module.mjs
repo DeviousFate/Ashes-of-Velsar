@@ -15,8 +15,8 @@ const require = createRequire(path.join(foundryAppPath, "package.json"));
 const { ClassicLevel } = require("classic-level");
 
 const expectedRoots = {
-  journals: { expression: /^!journal![^!]+$/, count: 5 },
-  scenes: { expression: /^!scenes![^!]+$/, count: 17 },
+  journals: { expression: /^!journal![^!]+$/, count: 4 },
+  scenes: { expression: /^!scenes![^!]+$/, count: 18 },
   campaign: { expression: /^!actors![^!]+$/, count: 20 },
   adventure: { expression: /^!adventures![^!]+$/, count: 1 }
 };
@@ -74,6 +74,9 @@ for (const [name, expectation] of Object.entries(expectedRoots)) {
       if (item.includes("worlds/star-wars-echoes-of-the-republic")) failures.push(`${name}:${trail} retains a world asset path`);
       if (item.startsWith("tokenizer/")) failures.push(`${name}:${trail} retains a tokenizer asset path`);
       if (item.includes("@UUID[JournalEntry.")) failures.push(`${name}:${trail} retains a world Journal UUID`);
+      if (item.includes("assets/blueprints/") || item.includes("brackens-point-gm-map.png") || item.includes("GM Map Journal")) {
+        failures.push(`${name}:${trail} retains removed map-reference content`);
+      }
     });
   }
   console.log(`${name}: ${records.length} records, ${roots.length} root documents`);
@@ -105,14 +108,9 @@ for (const { key, value } of packData.journals.filter(({ key }) => /^!journal![^
     if (!journalMap.has(`!journal.pages!${value._id}.${pageId}`)) failures.push(`${key} references missing page ${pageId}`);
   }
 }
-const mapJournal = journalMap.get("!journal!AoVBlueprints001");
-if (mapJournal?.pages?.length !== 17) failures.push("GM Map Journal does not contain all 17 map pages");
-for (const pageId of mapJournal?.pages ?? []) {
-  const page = journalMap.get(`!journal.pages!AoVBlueprints001.${pageId}`);
-  if (page?.type !== "text") failures.push(`GM Map Journal page ${pageId} is not a text page`);
-  if (!page?.text?.content?.includes("Compendium.ashes-of-velsar.campaign.Actor.")) {
-    failures.push(`GM Map Journal page ${pageId} has no campaign actor links`);
-  }
+if (journalMap.has("!journal!AoVBlueprints001")) failures.push("Obsolete GM Map Journal is still packaged");
+if (packData.journals.some(({ key }) => key.includes("AoVBlueprint") || key.includes("AoVGmMapPage"))) {
+  failures.push("Journals pack contains obsolete blueprint or GM-map records");
 }
 
 const sceneMap = recordMap(packData.scenes);
@@ -127,7 +125,12 @@ for (const { key, value } of packData.scenes.filter(({ key }) => /^!scenes![^!]+
   }
 
   if ((value.walls?.length ?? 0) !== 0) failures.push(`${key} should have no generated walls`);
-  if (!(value.tokens?.length > 0)) failures.push(`${key} has no staged tokens`);
+  if (value.width !== 2816 || value.height !== 1536) failures.push(`${key} does not use the 2816x1536 replacement-map dimensions`);
+  if (value.grid?.size !== 64) failures.push(`${key} does not use the replacement map's 64-pixel grid size`);
+  if (!value.background?.src?.startsWith("modules/ashes-of-velsar/assets/maps/dungeondraft/")) {
+    failures.push(`${key} does not reference a packaged replacement map`);
+  }
+  if (!(value.tokens?.length > 0) && value._id !== "AoVTownRndm00001") failures.push(`${key} has no staged tokens`);
   for (const wallId of value.walls ?? []) {
     const wall = sceneMap.get(`!scenes.walls!${value._id}.${wallId}`);
     if (!wall) {
@@ -192,8 +195,8 @@ for (const { key, value } of packData.scenes.filter(({ key }) => /^!scenes.token
 const adventure = packData.adventure.find(({ key }) => /^!adventures![^!]+$/.test(key))?.value;
 if (adventure) {
   if (adventure.actors?.length !== 20) failures.push("Adventure does not embed all 20 campaign actors");
-  if (adventure.journal?.length !== 5) failures.push("Adventure does not embed all 5 journals");
-  if (adventure.scenes?.length !== 17) failures.push("Adventure does not embed all 17 scenes");
+  if (adventure.journal?.length !== 4) failures.push("Adventure does not embed all 4 journals");
+  if (adventure.scenes?.length !== 18) failures.push("Adventure does not embed all 18 scenes");
   if (!adventure.scenes?.every((scene) => scene.notes?.length === 1)) failures.push("Adventure scenes did not embed their journal pins");
   if (!adventure.scenes?.every((scene) => (scene.walls?.length ?? 0) === 0)) failures.push("Adventure contains generated Scene walls");
   if (!adventure.scenes?.every((scene) => scene.tokens?.every((token) => token.delta && typeof token.delta === "object"))) {
@@ -202,31 +205,20 @@ if (adventure) {
 }
 
 const requiredAssets = [
-  ...Array.from({ length: 17 }, (_, index) => {
+  ...Array.from({ length: 18 }, (_, index) => {
     const slugs = [
       "01-brackens-point-landing-yard.png", "02-bent-spanner-cantina.png", "03-compressor-station-scrapyard.png",
       "04-ressiks-rustclaw-hideout.png", "05-southern-cut-checkpoint.png", "06-daviks-reclamation-yard.png",
       "07-hidden-stargazer-hangar.png", "08-crashed-transport-site.png", "09-broken-beacon-site.png",
       "10-tovan-rells-hidden-refuge.png", "11-prisoner-transfer-ambush.png", "12-administration-square.png",
       "13-workers-blocks.png", "14-market-row-during-purge.png", "15-stargazer-hangar-finale-damaged.png",
-      "16-doctor-veys-clinic.png", "17-desert-shrine.png"
+      "16-doctor-veys-clinic.png", "17-desert-shrine.png", "18-brackens-point-town-encounter.png"
     ];
     return `assets/maps/dungeondraft/${slugs[index]}`;
   }),
-  ...[
-    "01_brackens_point_landing_yard_blueprint.png", "02_bent_spanner_cantina_blueprint.png",
-    "03_compressor_station_and_scrapyard_blueprint.png", "04_ressiks_rustclaw_hideout_blueprint.png",
-    "05_southern_cut_imperial_checkpoint_blueprint.png", "06_daviks_reclamation_yard_blueprint.png",
-    "07_hidden_stargazer_hangar_blueprint.png", "08_crashed_transport_site_blueprint.png",
-    "09_broken_beacon_site_blueprint.png", "10_tovan_rells_hidden_refuge_blueprint.png",
-    "11_prisoner_transfer_ambush_blueprint.png", "12_administration_square_blueprint.png",
-    "13_workers_blocks_blueprint.png", "14_market_row_during_the_purge_blueprint.png",
-    "15_stargazer_hangar_finale_damaged_blueprint.png"
-  ].map((file) => `assets/blueprints/${file}`),
   "assets/landing-page.png",
   "assets/maps/bt-9-stargazer-diagram.png",
   "assets/handouts/arrival-at-brackens-point.png",
-  "assets/handouts/brackens-point-gm-map.png",
   "assets/actors/commander_voss.Avatar.webp",
   "assets/actors/commander_voss.Token.webp",
   "assets/actors/tovan_rell.Avatar.webp",
@@ -235,8 +227,23 @@ const requiredAssets = [
 for (const relativePath of requiredAssets) {
   try {
     await access(path.join(ROOT, relativePath));
+    if (relativePath.startsWith("assets/maps/dungeondraft/")) {
+      const image = await readFile(path.join(ROOT, relativePath));
+      const width = image.readUInt32BE(16);
+      const height = image.readUInt32BE(20);
+      if (width !== 2816 || height !== 1536) failures.push(`${relativePath} is ${width}x${height}; expected 2816x1536`);
+    }
   } catch {
     failures.push(`Missing asset ${relativePath}`);
+  }
+}
+
+for (const obsoletePath of ["assets/blueprints", "assets/handouts/brackens-point-gm-map.png"]) {
+  try {
+    await access(path.join(ROOT, obsoletePath));
+    failures.push(`Obsolete blueprint asset remains at ${obsoletePath}`);
+  } catch {
+    // Expected: blueprint-related assets have been removed.
   }
 }
 
