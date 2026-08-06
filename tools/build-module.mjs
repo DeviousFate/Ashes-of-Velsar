@@ -64,7 +64,7 @@ const chapterPages = {
 const mapDefinitions = [
   { id: "AoVLandingMap001", name: "01 — Bracken’s Point Landing Yard", slug: "01-brackens-point-landing-yard.png", width: 2816, height: 1536, sourceWidth: 1448, sourceHeight: 1086, folder: "chapter1", page: "chapter1" },
   { id: "MkBY37RL9t0H1cqF", name: "02 — The Bent Spanner Cantina", slug: "02-bent-spanner-cantina.png", width: 2816, height: 1536, sourceWidth: 1411, sourceHeight: 1114, folder: "chapter1", page: "chapter1" },
-  { id: "xk0d9gBiaJHvZewJ", name: "03 — Compressor Station and Scrapyard", slug: "03-compressor-station-scrapyard.png", width: 2816, height: 1536, sourceWidth: 1409, sourceHeight: 1116, folder: "chapter1", page: "chapter1" },
+  { id: "xk0d9gBiaJHvZewJ", name: "03 — Compressor Station and Scrapyard", slug: "03-compressor-station-scrapyard.png", width: 1408, height: 768, gridSize: 32, sourceWidth: 1409, sourceHeight: 1116, folder: "chapter1", page: "chapter1" },
   { id: "6vbTdZx3xrxOVgP6", name: "04 — Ressik’s Rustclaw Hideout", slug: "04-ressiks-rustclaw-hideout.png", width: 2816, height: 1536, sourceWidth: 1448, sourceHeight: 1086, folder: "chapter2", page: "chapter2" },
   { id: "EL02sxuRACXvwSXT", name: "05 — Southern Cut Imperial Checkpoint", slug: "05-southern-cut-checkpoint.png", width: 2816, height: 1536, sourceWidth: 1619, sourceHeight: 971, folder: "chapter4", page: "chapter4" },
   { id: "AoVReclaimMap001", name: "06 — Davik’s Reclamation Yard", slug: "06-daviks-reclamation-yard.png", width: 2816, height: 1536, sourceWidth: 1448, sourceHeight: 1086, folder: "chapter2", page: "chapter2" },
@@ -81,6 +81,28 @@ const mapDefinitions = [
   { id: "AoVSceneMap00013", name: "17 — Desert Shrine", slug: "17-desert-shrine.png", width: 2816, height: 1536, sourceWidth: 1448, sourceHeight: 1086, folder: "side", page: "chapter3" },
   { id: "AoVTownRndm00001", name: "18 — Bracken’s Point Town Encounter", slug: "18-brackens-point-town-encounter.png", width: 2816, height: 1536, sourceWidth: 2816, sourceHeight: 1536, folder: "side", page: "chapter1", optional: true }
 ];
+
+const sourceMapFiles = [
+  "01 Bracken's Point Landing.png",
+  "02 Bent Spanner.png",
+  "03 Compressor Station.png",
+  "4 Ressik's Rustclaw Hideout.png",
+  "05 South Cut Checkpoint.png",
+  "06 Davik's Reclamation Yard.png",
+  "07 Hidden Stargazer Hangar.png",
+  "08 Crashed Transport.png",
+  "09 Broken Beacon Site.png",
+  "10 Toven Rell's Hidden Refuge.png",
+  "11 Prisoner Transport Ambush.png",
+  "12 Administration Square.png",
+  "13 Worker's Blocks.png",
+  "14 Market Row (Purge).png",
+  "15 Stargazer Hangar Damaged.png",
+  "16 Doctor Vey's Clinic.png",
+  "17 Desert Shrine.png",
+  "18 Streets of Bracken's Point.png"
+];
+if (sourceMapFiles.length !== mapDefinitions.length) throw new Error("Every Scene map requires an accurately named AOV Maps source file.");
 
 const handoutFiles = [
   ["Arrival at Bracken’s Point.png", "arrival-at-brackens-point.png"],
@@ -505,6 +527,7 @@ const tokenActorRoots = new Map([...sourceActors, ...officialEncounterRecords]
 
 await copyAsset(path.join(worldImagePath, "Maps", "Diagram.png"), path.join("assets", "maps", "bt-9-stargazer-diagram.png"));
 for (const [sourceName, targetName] of handoutFiles) {
+  if (targetName === "brackens-point-player-map.png") continue;
   await copyAsset(path.join(worldImagePath, "Handouts", "Ashes of Velsar", sourceName), path.join("assets", "handouts", targetName));
 }
 
@@ -597,7 +620,7 @@ for (const [index, definition] of mapDefinitions.entries()) {
     alphaThreshold: 0
   };
   scene.thumb = backgroundPath;
-  scene.grid = { ...(scene.grid ?? {}), type: 0, size: 64, distance: 5, units: "ft" };
+  scene.grid = { ...(scene.grid ?? {}), type: 0, size: definition.gridSize ?? 64, distance: 5, units: "ft" };
   scene.tokens = tokenIds;
   scene.walls = wallIds;
   scene.lights = [];
@@ -611,7 +634,7 @@ for (const [index, definition] of mapDefinitions.entries()) {
     ...scene.flags,
     [MODULE_ID]: {
       chapter: definition.page,
-      sourceMap: `AOV Maps/${index + 1}-clean.png`,
+      sourceMap: `AOV Maps/${sourceMapFiles[index]}`,
       tracedWalls: 0,
       manualWallsExpected: true,
       optionalEncounter: Boolean(definition.optional),

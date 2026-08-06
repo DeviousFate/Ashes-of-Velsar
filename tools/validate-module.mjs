@@ -125,10 +125,19 @@ for (const { key, value } of packData.scenes.filter(({ key }) => /^!scenes![^!]+
   }
 
   if ((value.walls?.length ?? 0) !== 0) failures.push(`${key} should have no generated walls`);
-  if (value.width !== 2816 || value.height !== 1536) failures.push(`${key} does not use the 2816x1536 replacement-map dimensions`);
-  if (value.grid?.size !== 64) failures.push(`${key} does not use the replacement map's 64-pixel grid size`);
-  if (!value.background?.src?.startsWith("modules/ashes-of-velsar/assets/maps/dungeondraft/")) {
+  const sceneAssetPrefix = "modules/ashes-of-velsar/assets/maps/dungeondraft/";
+  if (!value.background?.src?.startsWith(sceneAssetPrefix)) {
     failures.push(`${key} does not reference a packaged replacement map`);
+  } else {
+    const sceneAssetPath = path.join(ROOT, "assets", "maps", "dungeondraft", value.background.src.slice(sceneAssetPrefix.length));
+    const image = await readFile(sceneAssetPath);
+    const imageWidth = image.readUInt32BE(16);
+    const imageHeight = image.readUInt32BE(20);
+    if (value.width !== imageWidth || value.height !== imageHeight) {
+      failures.push(`${key} dimensions ${value.width}x${value.height} do not match its ${imageWidth}x${imageHeight} map`);
+    }
+    const expectedGridSize = imageWidth / 44;
+    if (value.grid?.size !== expectedGridSize) failures.push(`${key} does not use its map's ${expectedGridSize}-pixel grid size`);
   }
   if (!(value.tokens?.length > 0) && value._id !== "AoVTownRndm00001") failures.push(`${key} has no staged tokens`);
   for (const wallId of value.walls ?? []) {
@@ -219,6 +228,7 @@ const requiredAssets = [
   "assets/landing-page.png",
   "assets/maps/bt-9-stargazer-diagram.png",
   "assets/handouts/arrival-at-brackens-point.png",
+  "assets/handouts/brackens-point-player-map.png",
   "assets/actors/commander_voss.Avatar.webp",
   "assets/actors/commander_voss.Token.webp",
   "assets/actors/tovan_rell.Avatar.webp",
@@ -228,6 +238,16 @@ for (const relativePath of requiredAssets) {
   try {
     await access(path.join(ROOT, relativePath));
     if (relativePath.startsWith("assets/maps/dungeondraft/")) {
+      const image = await readFile(path.join(ROOT, relativePath));
+      const width = image.readUInt32BE(16);
+      const height = image.readUInt32BE(20);
+      const expectedWidth = relativePath.endsWith("03-compressor-station-scrapyard.png") ? 1408 : 2816;
+      const expectedHeight = relativePath.endsWith("03-compressor-station-scrapyard.png") ? 768 : 1536;
+      if (width !== expectedWidth || height !== expectedHeight) {
+        failures.push(`${relativePath} is ${width}x${height}; expected ${expectedWidth}x${expectedHeight}`);
+      }
+    }
+    if (relativePath === "assets/handouts/brackens-point-player-map.png") {
       const image = await readFile(path.join(ROOT, relativePath));
       const width = image.readUInt32BE(16);
       const height = image.readUInt32BE(20);

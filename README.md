@@ -5,7 +5,7 @@ Ashes of Velsar is a Foundry VTT v13 campaign module for the D&D5e-based SW5E mo
 ## Included compendiums
 
 - **Complete Adventure:** imports the campaign journals, handouts, scenes, actors, folders, and scene-to-journal pins in one operation.
-- **Journals:** the full campaign manuscript, a quick reference, a GM dashboard, and player handouts.
+- **Journals:** the full campaign manuscript, a quick reference, a GM dashboard, and player handouts, including the illustrated Bracken’s Point city map.
 - **Scenes:** eighteen illustrated battlemaps organized by chapter at their native dimensions, including Doctor Vey’s Clinic, the Desert Shrine, and an optional Bracken’s Point town map for random encounters. Campaign encounter tokens are staged, but Scene walls are intentionally empty for the GM to configure manually.
 - **Campaign:** sixteen Velsar NPCs, the BT-9 Stargazer, and three official SW5E encounter actors, including embedded features, actor portraits, and tokens.
 
