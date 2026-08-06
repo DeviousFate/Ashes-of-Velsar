@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import { createRequire } from "node:module";
-import { access, cp, mkdir, readFile, rm } from "node:fs/promises";
+import { access, cp, mkdir, readFile, readdir, rm } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import process from "node:process";
@@ -112,6 +112,22 @@ if (journalMap.has("!journal!AoVBlueprints001")) failures.push("Obsolete GM Map 
 if (packData.journals.some(({ key }) => key.includes("AoVBlueprint") || key.includes("AoVGmMapPage"))) {
   failures.push("Journals pack contains obsolete blueprint or GM-map records");
 }
+const handoutJournalId = "5PyjVzBeImPu8J7N";
+const handoutJournal = journalMap.get(`!journal!${handoutJournalId}`);
+if (handoutJournal?.pages?.length !== 20) failures.push("Player Handouts journal does not contain all 20 replacement documents");
+for (const pageId of handoutJournal?.pages ?? []) {
+  const page = journalMap.get(`!journal.pages!${handoutJournalId}.${pageId}`);
+  if (page?.type !== "image") failures.push(`Player handout ${pageId} is not an image page`);
+  if (!page?.src?.startsWith("modules/ashes-of-velsar/assets/handouts/")) failures.push(`Player handout ${pageId} has an invalid asset path`);
+  if (!page?.flags?.["ashes-of-velsar"]?.playerHandout) failures.push(`Player handout ${pageId} lacks the replacement-handout flag`);
+}
+for (const { key, value } of packData.journals.filter(({ key }) => /^!journal\.pages!/.test(key))) {
+  const content = value.text?.content ?? "";
+  const expression = /Compendium\.ashes-of-velsar\.journals\.JournalEntry\.5PyjVzBeImPu8J7N\.JournalEntryPage\.([A-Za-z0-9]+)/g;
+  for (const match of content.matchAll(expression)) {
+    if (!journalMap.has(`!journal.pages!${handoutJournalId}.${match[1]}`)) failures.push(`${key} links to missing replacement handout ${match[1]}`);
+  }
+}
 
 const sceneMap = recordMap(packData.scenes);
 for (const { key, value } of packData.scenes.filter(({ key }) => /^!scenes![^!]+$/.test(key))) {
@@ -206,12 +222,37 @@ if (adventure) {
   if (adventure.actors?.length !== 20) failures.push("Adventure does not embed all 20 campaign actors");
   if (adventure.journal?.length !== 4) failures.push("Adventure does not embed all 4 journals");
   if (adventure.scenes?.length !== 18) failures.push("Adventure does not embed all 18 scenes");
+  const embeddedHandouts = adventure.journal?.find((journal) => journal._id === "5PyjVzBeImPu8J7N");
+  if (embeddedHandouts?.pages?.length !== 20) failures.push("Adventure does not embed all 20 replacement handouts");
   if (!adventure.scenes?.every((scene) => scene.notes?.length === 1)) failures.push("Adventure scenes did not embed their journal pins");
   if (!adventure.scenes?.every((scene) => (scene.walls?.length ?? 0) === 0)) failures.push("Adventure contains generated Scene walls");
   if (!adventure.scenes?.every((scene) => scene.tokens?.every((token) => token.delta && typeof token.delta === "object"))) {
     failures.push("Adventure scene tokens did not embed their ActorDelta documents");
   }
 }
+
+const handoutSlugs = [
+  "01-imperial-arrival-processing-notice.png",
+  "02-brackens-point-temporary-visitor-permit.png",
+  "03-missing-person-pavo-nesh.png",
+  "04-tensin-blacks-job-chit.png",
+  "05-compressor-station-route-sketch.png",
+  "06-rustclaw-claim-marker.png",
+  "07-imperial-navicomputer-evidence-sheet.png",
+  "08-davik-renn-reclamation-invoice.png",
+  "09-bt-9-stargazer-registration-card.png",
+  "10-wayfarer-cargo-passenger-manifest.png",
+  "11-wayfarer-distress-log.png",
+  "12-broken-beacon-coordinate-record.png",
+  "13-tovan-rells-medical-ledger.png",
+  "14-tovans-archive-fragment.png",
+  "15-desert-shrine-inscription-rubbing.png",
+  "16-contingency-cinderglass-directive.png",
+  "17-imperial-wanted-bulletin-tovan-rell.png",
+  "18-prisoner-transfer-manifest.png",
+  "19-imperial-curfew-withdrawal-order.png",
+  "20-brackens-point-emergency-broadcast.png"
+];
 
 const requiredAssets = [
   ...Array.from({ length: 18 }, (_, index) => {
@@ -225,10 +266,9 @@ const requiredAssets = [
     ];
     return `assets/maps/dungeondraft/${slugs[index]}`;
   }),
+  ...handoutSlugs.map((slug) => `assets/handouts/${slug}`),
   "assets/landing-page.png",
   "assets/maps/bt-9-stargazer-diagram.png",
-  "assets/handouts/arrival-at-brackens-point.png",
-  "assets/handouts/brackens-point-player-map.png",
   "assets/actors/commander_voss.Avatar.webp",
   "assets/actors/commander_voss.Token.webp",
   "assets/actors/tovan_rell.Avatar.webp",
@@ -247,23 +287,36 @@ for (const relativePath of requiredAssets) {
         failures.push(`${relativePath} is ${width}x${height}; expected ${expectedWidth}x${expectedHeight}`);
       }
     }
-    if (relativePath === "assets/handouts/brackens-point-player-map.png") {
-      const image = await readFile(path.join(ROOT, relativePath));
-      const width = image.readUInt32BE(16);
-      const height = image.readUInt32BE(20);
-      if (width !== 2816 || height !== 1536) failures.push(`${relativePath} is ${width}x${height}; expected 2816x1536`);
-    }
   } catch {
     failures.push(`Missing asset ${relativePath}`);
   }
 }
 
-for (const obsoletePath of ["assets/blueprints", "assets/handouts/brackens-point-gm-map.png"]) {
+const packagedHandouts = (await readdir(path.join(ROOT, "assets", "handouts"))).sort();
+if (JSON.stringify(packagedHandouts) !== JSON.stringify([...handoutSlugs].sort())) {
+  failures.push("assets/handouts does not contain exactly the 20 replacement handout images");
+}
+
+for (const obsoletePath of [
+  "assets/blueprints",
+  "assets/handouts/abandoned-compressor-station.png",
+  "assets/handouts/arrival-at-brackens-point.png",
+  "assets/handouts/brackens-point-gm-map.png",
+  "assets/handouts/brackens-point-player-map.png",
+  "assets/handouts/burning-of-brackens-point.png",
+  "assets/handouts/checkpoint-aurek.png",
+  "assets/handouts/davik-renns-hidden-hangar.png",
+  "assets/handouts/the-bent-spanner.png",
+  "assets/handouts/the-forgotten-shrine.png",
+  "assets/handouts/the-hermits-refuge.png",
+  "assets/handouts/the-rustclaw-revel.png",
+  "assets/handouts/wreck-in-the-eastern-basin.png"
+]) {
   try {
     await access(path.join(ROOT, obsoletePath));
-    failures.push(`Obsolete blueprint asset remains at ${obsoletePath}`);
+    failures.push(`Obsolete asset remains at ${obsoletePath}`);
   } catch {
-    // Expected: blueprint-related assets have been removed.
+    // Expected: superseded assets have been removed.
   }
 }
 

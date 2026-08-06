@@ -104,19 +104,29 @@ const sourceMapFiles = [
 ];
 if (sourceMapFiles.length !== mapDefinitions.length) throw new Error("Every Scene map requires an accurately named AOV Maps source file.");
 
-const handoutFiles = [
-  ["Arrival at Bracken’s Point.png", "arrival-at-brackens-point.png"],
-  ["Bracken's Point Player Map.png", "brackens-point-player-map.png"],
-  ["Checkpoint Aurek.png", "checkpoint-aurek.png"],
-  ["Davik Renn’s Hidden Hangar.png", "davik-renns-hidden-hangar.png"],
-  ["The Abandoned Compressor Station.png", "abandoned-compressor-station.png"],
-  ["The Bent Spanner.png", "the-bent-spanner.png"],
-  ["The Burning of Bracken's Point.png", "burning-of-brackens-point.png"],
-  ["The Forgotten Shrine.png", "the-forgotten-shrine.png"],
-  ["The Hermit’s Refuge.png", "the-hermits-refuge.png"],
-  ["The Rustclaw Revel.png", "the-rustclaw-revel.png"],
-  ["The Wreck in the Eastern Basin.png", "wreck-in-the-eastern-basin.png"]
+const handoutDefinitions = [
+  { id: "kdJxfNY2YQU5XOri", name: "01 — Imperial Arrival Processing Notice", slug: "01-imperial-arrival-processing-notice.png", sourceFile: "01. IMPERIAL ARRIVAL PROCESSING NOTICE-clean.png" },
+  { id: "nrWoIm4KP1jwQp0w", name: "02 — Bracken’s Point Temporary Visitor Permit", slug: "02-brackens-point-temporary-visitor-permit.png", sourceFile: "02. BRACKEN’S POINT TEMPORARY VISITOR PERMIT-clean.png" },
+  { id: "UJhEDz91Eb0DMSzw", name: "03 — Missing Person Poster: Pavo Nesh", slug: "03-missing-person-pavo-nesh.png", sourceFile: "03. Missing Person Poster - Pavo Nesh-clean.png" },
+  { id: "RBGiGnjxe9yh6FlR", name: "04 — Tensin Black’s Job Chit", slug: "04-tensin-blacks-job-chit.png", sourceFile: "04. Tensin Black's Job Chit-clean.png" },
+  { id: "sYicNXWZowbYMw64", name: "05 — Compressor Station Route Sketch", slug: "05-compressor-station-route-sketch.png", sourceFile: "05. COMPRESSOR STATION ROUTE SKETCH-clean.png" },
+  { id: "xBYW13kINvLqLbt3", name: "06 — Rustclaw Claim Marker", slug: "06-rustclaw-claim-marker.png", sourceFile: "06. RUSTCLAW CLAIM MARKER-clean.png" },
+  { id: "AoVHandout000007", name: "07 — Imperial Navicomputer Evidence Sheet", slug: "07-imperial-navicomputer-evidence-sheet.png", sourceFile: "07. IMPERIAL NAVICOMPUTER EVIDENCE SHEET-clean.png" },
+  { id: "lts4dait5JASMTJA", name: "08 — Davik Renn Reclamation Invoice", slug: "08-davik-renn-reclamation-invoice.png", sourceFile: "08. DAVIK RENN RECLAMATION INVOICE-clean.png" },
+  { id: "AoVHandout000009", name: "09 — BT-9 Stargazer Registration Card", slug: "09-bt-9-stargazer-registration-card.png", sourceFile: "09. BT-9 STARGAZER REGISTRATION CARD-clean.png" },
+  { id: "hQcfXgxxcRy3MAWm", name: "10 — Wayfarer Cargo and Passenger Manifest", slug: "10-wayfarer-cargo-passenger-manifest.png", sourceFile: "10. WAYFARER CARGO AND PASSENGER MANIFEST-clean.png" },
+  { id: "AoVHandout000011", name: "11 — Wayfarer Distress Log", slug: "11-wayfarer-distress-log.png", sourceFile: "11. WAYFARER DISTRESS LOG-clean.png" },
+  { id: "AoVHandout000012", name: "12 — Broken Beacon Coordinate Record", slug: "12-broken-beacon-coordinate-record.png", sourceFile: "12. BROKEN BEACON COORDINATE RECORD-clean.png" },
+  { id: "wYWFDT7KPbjtnrtv", name: "13 — Tovan Rell’s Medical Ledger", slug: "13-tovan-rells-medical-ledger.png", sourceFile: "13. TOVAN RELL’S MEDICAL LEDGER-clean.png" },
+  { id: "AoVHandout000014", name: "14 — Tovan’s Archive Fragment", slug: "14-tovans-archive-fragment.png", sourceFile: "14. TOVAN’S ARCHIVE FRAGMENT-clean.png" },
+  { id: "rJZWIvA6wnppBjaf", name: "15 — Desert Shrine Inscription Rubbing", slug: "15-desert-shrine-inscription-rubbing.png", sourceFile: "15. DESERT SHRINE INSCRIPTION RUBBING-clean.png" },
+  { id: "AoVHandout000016", name: "16 — Contingency Cinderglass Directive", slug: "16-contingency-cinderglass-directive.png", sourceFile: "16. CONTINGENCY CINDERGLASS DIRECTIVE-clean.png" },
+  { id: "AoVHandout000017", name: "17 — Imperial Wanted Bulletin: Tovan Rell", slug: "17-imperial-wanted-bulletin-tovan-rell.png", sourceFile: "17. IMPERIAL WANTED BULLETIN — TOVAN RELL-clean.png" },
+  { id: "AoVHandout000018", name: "18 — Prisoner Transfer Manifest", slug: "18-prisoner-transfer-manifest.png", sourceFile: "18. PRISONER TRANSFER MANIFEST-clean.png" },
+  { id: "AoVHandout000019", name: "19 — Imperial Curfew and Withdrawal Order", slug: "19-imperial-curfew-withdrawal-order.png", sourceFile: "19. IMPERIAL CURFEW AND WITHDRAWAL ORDER-clean.png" },
+  { id: "3WkTJcf0upmQpIpO", name: "20 — Bracken’s Point Emergency Broadcast", slug: "20-brackens-point-emergency-broadcast.png", sourceFile: "20. BRACKEN’S POINT EMERGENCY BROADCAST-clean.png" }
 ];
+if (new Set(handoutDefinitions.map(({ id }) => id)).size !== handoutDefinitions.length) throw new Error("Handout page IDs must be unique.");
 
 const actorIds = new Set([
   "0ml1uw24lJevFdH1", "1bzV6DO0kf6CsfkR", "20iCLIcHVHWZqvBg", "9QrTMNJRTA2W7S0X",
@@ -211,19 +221,15 @@ async function writePack(name, records) {
 
 function replaceWorldJournalLinks(html) {
   if (!html) return html;
-  return html.replaceAll(
+  let localized = html.replaceAll(
     `@UUID[JournalEntry.${handoutsId}.JournalEntryPage.`,
     `@UUID[${compendiumUuid("journals", "JournalEntry", handoutsId)}.JournalEntryPage.`
   );
-}
-
-function rewriteHandoutSource(src) {
-  if (!src) return src;
-  const decoded = decodeURIComponent(src);
-  const sourceName = path.basename(decoded);
-  const normalize = (name) => name.normalize("NFKC").replace(/[’']/g, "").toLocaleLowerCase("en-US");
-  const match = handoutFiles.find(([name]) => normalize(name) === normalize(sourceName));
-  return match ? `${MODULE_PATH}/assets/handouts/${match[1]}` : src;
+  for (const handout of handoutDefinitions) {
+    const pageUuid = `${compendiumUuid("journals", "JournalEntry", handoutsId)}.JournalEntryPage.${handout.id}`;
+    localized = localized.replace(new RegExp(`@UUID\\[${pageUuid.replaceAll(".", "\\.")}\\]\\{[^}]*\\}`, "g"), `@UUID[${pageUuid}]{${handout.name}}`);
+  }
+  return localized;
 }
 
 function makeJournalPage(id, name, content, sort) {
@@ -526,12 +532,10 @@ const tokenActorRoots = new Map([...sourceActors, ...officialEncounterRecords]
   .map(({ value }) => [value._id, value]));
 
 await copyAsset(path.join(worldImagePath, "Maps", "Diagram.png"), path.join("assets", "maps", "bt-9-stargazer-diagram.png"));
-for (const [sourceName, targetName] of handoutFiles) {
-  if (targetName === "brackens-point-player-map.png") continue;
-  await copyAsset(path.join(worldImagePath, "Handouts", "Ashes of Velsar", sourceName), path.join("assets", "handouts", targetName));
-}
 
-const journalRecords = sourceJournals.map(({ key, value }) => ({ key, value: deepClone(value) }));
+const journalRecords = sourceJournals
+  .filter(({ key }) => !key.startsWith(`!journal.pages!${handoutsId}.`))
+  .map(({ key, value }) => ({ key, value: deepClone(value) }));
 for (const record of journalRecords) {
   const value = record.value;
   if (record.key.startsWith("!journal!")) {
@@ -544,10 +548,25 @@ for (const record of journalRecords) {
   } else if (record.key.startsWith("!journal.pages!")) {
     value._stats = stats(value._stats?.compendiumSource ?? null);
     if (value.text?.content) value.text.content = replaceWorldJournalLinks(value.text.content);
-    if (value.type === "image") value.src = rewriteHandoutSource(value.src);
     if (value._id === chapterPages.overview) value.name = "Campaign Guide";
     if (value._id === "KJkq6Iwst83DHe1j") value.name = "Quick Reference";
   }
+}
+
+const handoutRoot = journalRecords.find(({ key }) => key === `!journal!${handoutsId}`)?.value;
+if (!handoutRoot) throw new Error("The source snapshot does not contain the player Handouts journal.");
+handoutRoot.pages = handoutDefinitions.map(({ id }) => id);
+for (const [index, handout] of handoutDefinitions.entries()) {
+  journalRecords.push({
+    key: `!journal.pages!${handoutsId}.${handout.id}`,
+    value: makeImagePage(
+      handout.id,
+      handout.name,
+      `${MODULE_PATH}/assets/handouts/${handout.slug}`,
+      index * 100000,
+      { playerHandout: true, sourceFile: `AOV Maps/Handouts/${handout.sourceFile}` }
+    )
+  });
 }
 
 const actorRootPreview = sourceActors
@@ -745,5 +764,5 @@ const adventure = {
 };
 await writePack("adventure", [{ key: `!adventures!${adventureId}`, value: adventure }]);
 
-console.log(`Packaged ${mapDefinitions.length} Scene maps and ${handoutFiles.length} handouts`);
+console.log(`Packaged ${mapDefinitions.length} Scene maps and ${handoutDefinitions.length} handouts`);
 console.log(`Packaged ${actorRoots.length} actors, ${journalRoots.length} journals, and ${sceneRoots.length} scenes`);
